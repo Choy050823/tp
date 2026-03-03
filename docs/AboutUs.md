@@ -9,15 +9,23 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ## Project team
 
+Our tutor is **Priyadarshi Charvi**. Our team consists of 5 members.
+
 ### Lee Yi Heng
 
-<img src="images/henghengyh.png" width="200px">
+_A Year 2 Mathematics and Computer Science student at NUS with an interest in backend engineering and machine learning._
+
+<img src="images/henghengyh.png" width="300px">
 
 [[homepage](https://www.linkedin.com/in/lee-yi-heng-nus/)]
 [[github](https://github.com/henghengyh)]
 [[portfolio](team/yiheng.md)]
 
-* Role: Project Advisor
+* Role: Team Lead
+* Responsibilities: 
+    * Backend Integration
+    * UI Design
+    * Code Review
 
 ### Jane Doe
 
