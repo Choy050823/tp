@@ -319,7 +319,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1. Portability
     1. Should work on any _mainstream OS_ (e.g. Windows, macOS and Linux) as long as it has Java `17` or above installed.
-2. Capacity
+    2. Should not depend on any remote server.
+2. Scalability
     1. Should be able to hold up to **1000 persons** without a noticeable sluggishness in performance for typical usage.
 3. CLI Productivity 
     1. A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
@@ -327,8 +328,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     1. Should return search results within **1 second** for about **1000 stored contacts**.
 5. Usability 
     1. A new user should be able to learn basic commands (add, delete, find, list) within **10 minutes** using the provided user guide.
-6. Data Persistence
-    1. Should not lose stored contacts when the application is closed normally and persist the stored contacts between application sessions.
+6. Data Storage
+    1. Should not use a _Database Management System (DBMS)_ to store data.
+    2. Should not lose stored contacts when the application is closed normally and persist the stored contacts between application sessions.
 7. Reliability
     1. Should operate without crashes during normal usage and when executing valid commands.
     2. Should handle invalid or malformed user input gracefully by displaying appropriate error messages without terminating the application.
@@ -338,6 +340,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     1. Should provide _clear and consistent_ feedback messages (using the same format) to inform the user of successful or failed operations.
 10. Fault Tolerance
     1. Should ensure that existing contact data remains intact even if a command execution fails due to invalid input.
+11. Single-User Constraint
+    1. Should be designed for **single-user usage** and should not support concurrent access by multiple users.
+    2. Should not support multiple users accessing or modifying the same data file during normal operations.
 
 ### Glossary
 
