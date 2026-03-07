@@ -263,12 +263,14 @@ _{Explain here how the data archiving feature will be implemented}_
 **Target user profile**:
 
 * Secretary of NUSSU
-* manages contact details of leaders across multiple university committees
+* manages contact details of many leaders across multiple university committees
 * frequently coordinates meetings and events between student leadership bodies
 * has a busy schedule and needs quick access to contact information
-* prefers fast interaction using commands instead of navigating complex interfaces
+* can type fast
+* prefers typing to navigating a complex GUI-driven app
+* is reasonably comfortable using CLI apps
 
-**Value proposition**: helps the NUSSU secretary manage contact details of leaders from multiple university committees and quickly identify who has meetings or events during specific periods, reducing time spent searching scattered contacts and improving coordination across student leadership bodies.
+**Value proposition**: helps the NUSSU secretary manage contact details of many leaders from multiple university committees and quickly identify who has meetings or events during specific periods, reducing time spent searching scattered contacts and improving coordination across student leadership bodies.
 
 ### User Stories
 
