@@ -356,6 +356,67 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 6a2. Marcus proceeds to confirm the archival for the remaining selection.
     * Use case resumes from step 7.
 
+---
+
+**UC04: Add Contact**
+
+**Goal:** To manually add a new student leader's details to the system.
+
+**MSS:**
+1. Marcus chooses to add a new contact.
+2. CampusConnect requests the leader's details (Name, Committee, Role, Contact Number, and "Busy" periods).
+3. Marcus enters the requested details.
+4. CampusConnect saves the contact and displays the new profile.
+   Use case ends.
+
+**Extensions:**
+* 3a. Marcus only has partial information (e.g., name and committee only).
+    * 3a1. Marcus enters the available information and chooses to save.
+    * 3a2. CampusConnect saves the contact and flags the profile as "Incomplete."
+    * Use case ends.
+* 3b. CampusConnect detects a duplicate contact (same name and committee).
+    * 3b1. CampusConnect warns Marcus about the potential duplicate.
+    * 3b2. Marcus chooses to either cancel the entry or proceed with a unique identifier.
+    * Use case resumes at step 4.
+
+---
+
+**UC05: Delete Contact**
+
+**Goal:** To remove a contact who has graduated or left their position.
+
+**MSS:**
+1. Marcus finds the contact he wishes to remove (see **UC06: Search Contact**).
+2. Marcus selects the **Delete** option for that contact.
+3. CampusConnect requests confirmation for the deletion.
+4. Marcus confirms the deletion.
+5. CampusConnect removes the contact from the database and confirms the action.
+   Use case ends.
+
+**Extensions:**
+* 4a. Marcus chooses to cancel the deletion.
+    * 4a1. CampusConnect returns to the contact's profile view without deleting.
+    * Use case ends.
+
+---
+
+**UC06: Search Contact**
+
+**Goal:** To find a specific leader or group of leaders using a name or keyword.
+
+**MSS:**
+1. Marcus enters a search query (e.g., a person’s name, a committee name, or a tag).
+2. CampusConnect filters the contacts based on the query.
+3. CampusConnect displays a list of matching contacts.
+4. Marcus selects a contact from the list to view full details.
+   Use case ends.
+
+**Extensions:**
+* 2a. No matching contacts are found.
+    * 2a1. CampusConnect displays a "No results found" message and suggests checking the spelling or the Archive.
+    * 2a2. Marcus enters a new search query.
+    * Use case resumes at step 2.
+
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
