@@ -94,14 +94,19 @@ public class PersonBuilder {
     }
 
     /**
+     * Sets the {@code Remark} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withRemark(String remark) {
+        this.remark = new Remark(remark);
+        return this;
+    }
+
+    /**
      * Returns a new Person instance with parameters given.
      */
     public Person build() {
         return new Person(name, phone, email, address, remark, tags);
     }
 
-    public PersonBuilder withRemark(String remark) {
-        this.remark = new Remark(remark);
-        return this;
-    }
+
 }
