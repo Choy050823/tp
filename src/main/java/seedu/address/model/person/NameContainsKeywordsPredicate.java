@@ -13,6 +13,12 @@ import seedu.address.logic.commands.exceptions.CommandException;
 public class NameContainsKeywordsPredicate implements Predicate<Person> {
     private final List<String> keywords;
 
+    /**
+     * Creates a predicate that matches names containing any of the given keywords.
+     *
+     * @param keywords Keywords to match against a person's name.
+     * @throws CommandException If any keyword contains a non-alphanumeric character.
+     */
     public NameContainsKeywordsPredicate(List<String> keywords) throws CommandException {
         if (keywords.stream().anyMatch(keyword -> !keyword.matches("^[a-zA-Z0-9]+$"))) {
             throw new CommandException(Messages.MESSAGE_CONTAINS_NON_ALPHANUMERIC_CHARACTER);

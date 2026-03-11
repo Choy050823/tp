@@ -41,8 +41,7 @@ public class ModelManager implements Model {
 
         // Filter the person full name in alphabetical order
         sortedFilteredPersons.setComparator(
-                Comparator.comparing(
-                        (Person p) -> p.getName().fullName,
+                Comparator.comparing((Person p) -> p.getName().fullName,
                         String.CASE_INSENSITIVE_ORDER
                 ).thenComparing(p -> p.getName().fullName)
         );
