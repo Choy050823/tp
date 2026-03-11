@@ -69,8 +69,8 @@ public class NameContainsKeywordsPredicateTest {
 
     @Test
     public void constructor_invalidKeyword_throwsCommandException() {
-        CommandException exception = assertThrows(CommandException.class,
-                () -> new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob!")));
+        CommandException exception = assertThrows(CommandException.class, () ->
+                new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob!")));
         assertEquals(Messages.MESSAGE_CONTAINS_NON_ALPHANUMERIC_CHARACTER, exception.getMessage());
     }
 
