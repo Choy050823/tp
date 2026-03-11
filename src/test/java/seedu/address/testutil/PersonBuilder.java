@@ -8,6 +8,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Role;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -15,12 +16,13 @@ import seedu.address.model.util.SampleDataUtil;
  * A utility class to help with building Person objects.
  */
 public class PersonBuilder {
-
+	public static final String DEFAULT_ROLE = "Student";
     public static final String DEFAULT_NAME = "Amy Bee";
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
 
+	private Role role;
     private Name name;
     private Phone phone;
     private Email email;
@@ -31,6 +33,7 @@ public class PersonBuilder {
      * Creates a {@code PersonBuilder} with the default details.
      */
     public PersonBuilder() {
+		role = new Role(DEFAULT_ROLE);
         name = new Name(DEFAULT_NAME);
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
@@ -42,6 +45,7 @@ public class PersonBuilder {
      * Initializes the PersonBuilder with the data of {@code personToCopy}.
      */
     public PersonBuilder(Person personToCopy) {
+		role = personToCopy.getRole();
         name = personToCopy.getName();
         phone = personToCopy.getPhone();
         email = personToCopy.getEmail();
@@ -88,9 +92,16 @@ public class PersonBuilder {
         this.email = new Email(email);
         return this;
     }
+	/**
+	 * Sets the {@code Role} of the {@code Person} that we are building.
+	 */
+	public PersonBuilder withRole(String role) {
+		this.role = new Role(role);
+		return this;
+	}
 
     public Person build() {
-        return new Person(name, phone, email, address, tags);
+        return new Person(role, name, phone, email, address, tags);
     }
 
 }
