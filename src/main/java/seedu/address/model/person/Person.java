@@ -11,12 +11,16 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.tag.Tag;
 
 /**
- * Represents a Person in the address book.
+ * Represents a Person's role in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
+ * Note: Each {@code Person} entry is expected to have a single role.
+ * If a person holds multiple responsibilities, it is recommended to
+ * create separate entries for each role.
  */
 public class Person {
 
     // Identity fields
+    private final Role role;
     private final Name name;
     private final Phone phone;
     private final Email email;
@@ -28,13 +32,18 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Role role, Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+        requireAllNonNull(role, name, phone, email, address, tags);
+        this.role = role;
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
+    }
+
+    public Role getRole() {
+        return role;
     }
 
     public Name getName() {
@@ -62,7 +71,7 @@ public class Person {
     }
 
     /**
-     * Returns true if both persons have the same name.
+     * Returns true if both persons have the same identity.
      * This defines a weaker notion of equality between two persons.
      */
     public boolean isSamePerson(Person otherPerson) {
@@ -71,6 +80,7 @@ public class Person {
         }
 
         return otherPerson != null
+                && otherPerson.getRole().equals(getRole())
                 && otherPerson.getName().equals(getName());
     }
 
@@ -84,13 +94,13 @@ public class Person {
             return true;
         }
 
-        // instanceof handles nulls
         if (!(other instanceof Person)) {
             return false;
         }
 
         Person otherPerson = (Person) other;
-        return name.equals(otherPerson.name)
+        return role.equals(otherPerson.role)
+                && name.equals(otherPerson.name)
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
@@ -99,13 +109,13 @@ public class Person {
 
     @Override
     public int hashCode() {
-        // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(role, name, phone, email, address, tags);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
+                .add("role", role)
                 .add("name", name)
                 .add("phone", phone)
                 .add("email", email)
@@ -113,5 +123,4 @@ public class Person {
                 .add("tags", tags)
                 .toString();
     }
-
 }
