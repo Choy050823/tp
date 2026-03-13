@@ -24,7 +24,7 @@ public class ConfirmDeleteCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_ASK_CONFIRMATION
-            = "Are you sure you want to delete the contact %1$s? [y/n]";
+            = "Are you sure you want to delete the contact: %1$s? [y/n]";
 
     private final Index targetIndex;
 
