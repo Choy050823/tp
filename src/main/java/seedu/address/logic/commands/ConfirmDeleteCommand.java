@@ -53,7 +53,7 @@ public class ConfirmDeleteCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof DeleteCommand)) {
+        if (!(other instanceof ConfirmDeleteCommand)) {
             return false;
         }
 
