@@ -57,7 +57,7 @@ public class LogicManager implements Logic {
         if (!currentlyAwaitingYesNo) {
             Command command = addressBookParser.parseCommandWithConfirmation(commandText);
             // either execute a ConfirmXXXCommand (e.g. ConfirmDeleteCommand) or a normal command
-            // that has no confirmation step (e.g. list) 
+            // that has no confirmation step (e.g. list)
             commandResult = command.execute(model);
             boolean thisCommandRequiresConfirmation = commandResult.isAwaitingConfirmation();
             if (thisCommandRequiresConfirmation) {
