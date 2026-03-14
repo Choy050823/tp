@@ -26,6 +26,9 @@ public class ListCommand extends Command {
             + "Example: " + COMMAND_WORD + " sort ascending\n"
             + "Example: " + COMMAND_WORD + " sort reverse";
 
+    /**
+     * Represents the sorting order for the list command.
+     */
     public enum SortOrder {
         NONE,
         ASCENDING,
@@ -36,6 +39,14 @@ public class ListCommand extends Command {
 
     public ListCommand(SortOrder sortOrder) {
         this.sortOrder = sortOrder;
+    }
+
+    /**
+     * Returns the sorting order of this ListCommand.
+     * @return the sorting order
+     */
+    public SortOrder getSortOrder() {
+        return this.sortOrder;
     }
 
     @Override
