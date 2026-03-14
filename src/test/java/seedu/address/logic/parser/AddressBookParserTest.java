@@ -101,7 +101,7 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_unrecognisedInput_throwsParseException() {
         assertThrows(ParseException.class, String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE), ()
-            -> parser.parseCommand(""));
+                -> parser.parseCommand(""));
     }
 
     @Test
@@ -117,13 +117,13 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseYesNo_y() throws Exception {
+    public void parseYesNo_yes() throws Exception {
         assertTrue(parser.parseYesNo("y"));
         assertTrue(parser.parseYesNo("y ")); // with trailing space
     }
 
     @Test
-    public void parseYesNo_n() throws Exception {
+    public void parseYesNo_no() throws Exception {
         assertTrue(!parser.parseYesNo("n"));
         assertTrue(!parser.parseYesNo("n ")); // with trailing space
     }
