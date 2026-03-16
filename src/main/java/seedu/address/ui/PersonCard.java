@@ -127,9 +127,14 @@ public class PersonCard extends UiPart<Region> {
             label.setStyle(copiedStyle);
 
             // Step THREE: Revert back after 200ms
-            PauseTransition pause = new PauseTransition(Duration.millis(200));
-            pause.setOnFinished(e -> label.setStyle(originalStyle));
-            pause.play();
+            if (!"true".equals(System.getenv("CI"))) {
+                PauseTransition pause = new PauseTransition(Duration.millis(200));
+                pause.setOnFinished(e -> label.setStyle(originalStyle));
+                pause.play();
+            } else {
+                // On CI, just reset immediately to avoid hanging
+                label.setStyle(originalStyle);
+            }
         });
     }
 }
