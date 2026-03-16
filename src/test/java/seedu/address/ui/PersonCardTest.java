@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import javafx.application.Platform;
 import javafx.scene.control.Label;
+import javafx.scene.input.Clipboard;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.PersonBuilder;
 
@@ -28,7 +29,6 @@ public class PersonCardTest {
      */
     @BeforeAll
     public static void setUp() {
-        assumeFalse("true".equals(System.getenv("CI")), "Skipping GUI tests on CI environments.");
         System.setProperty("java.awt.headless", "true");
         System.setProperty("testfx.robot", "glass");
         System.setProperty("testfx.headless", "true");
@@ -177,5 +177,56 @@ public class PersonCardTest {
         javafx.scene.layout.FlowPane tagsPane = getPrivateField(personCard[0], "tags");
 
         assertEquals(2, tagsPane.getChildren().size());
+    }
+
+    /**
+     * Tests that clicking on a copyable label (e.g., phone) copies the correct text to the clipboard.
+     * @throws Exception
+     */
+    @Test
+    public void copyableLabel_click_copiesText() throws Exception {
+        Person person = new PersonBuilder().build();
+
+        CountDownLatch latch = new CountDownLatch(1);
+        final PersonCard[] personCard = new PersonCard[1];
+
+        // Create a PersonCard on the JavaFX Application Thread
+        // Asynchronously to ensure the UI is properly initialized before the test continues/ ends prematurely
+        Platform.runLater(() -> {
+            personCard[0] = new PersonCard(person, 1);
+            latch.countDown();
+        });
+
+        latch.await(500, TimeUnit.MILLISECONDS);
+
+        Label phoneLabel = getPrivateField(personCard[0], "phone");
+
+        CountDownLatch clickLatch = new CountDownLatch(1);
+
+        // Simulate a click on the phone label and check if the correct text is copied to the clipboard
+        // Asynchronously to ensure the UI is properly initialized before the test continues/ ends prematurely
+        Platform.runLater(() -> {
+            // Yi Heng: I used AI to help me iterate to cover the click event of the copyable label in PersonCard
+            phoneLabel.fireEvent(
+                    new javafx.scene.input.MouseEvent(
+                            javafx.scene.input.MouseEvent.MOUSE_CLICKED,
+                            0, 0, 0, 0,
+                            javafx.scene.input.MouseButton.PRIMARY,
+                            1,
+                            false, false, false, false,
+                            true, false, false,
+                            true, false, false,
+                            null
+                    )
+            );
+
+            Clipboard clipboard = Clipboard.getSystemClipboard();
+            assertEquals(person.getPhone().value, clipboard.getString());
+
+            clickLatch.countDown();
+        });
+
+        // Basic knowledge of Asynchronous programming applied from CS2030S
+        clickLatch.await(500, TimeUnit.MILLISECONDS);
     }
 }
