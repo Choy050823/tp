@@ -161,7 +161,6 @@ Examples:
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
 ### Locating persons by name: `find`
-TODO: update this section with new implementation of `find`
 
 Finds persons whose names contain any of the given keywords.
 
