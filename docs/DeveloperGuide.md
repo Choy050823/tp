@@ -534,7 +534,8 @@ testers are expected to do more *exploratory* testing.
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
+### Adding a person
+1. TODO: Add test cases for `add` command.
 
 ### Deleting a person
 
@@ -554,45 +555,46 @@ testers are expected to do more *exploratory* testing.
    1. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size), `delete abc`<br>
       Expected: Similar to the previous case. An invalid command or out-of-bounds error is shown immediately without triggering the confirmation prompt.
 
-1. _{ more test cases …​ }_
+### Finding persons
+1. TODO: Add test cases for `find` command.
 
 ### Listing persons
 1. Listing persons without sorting
 
    1. Prerequisites: The app contains multiple contacts with different names.
 
-   2. Test case: `list`
+   2. Test case: `list`   
       Expected: All contacts are displayed in their default order.
 
 2. Listing persons in ascending order
 
    1. Prerequisites: Multiple contacts exist with different names.
 
-   2. Test case: `list sort`
+   2. Test case: `list sort`  
       Expected: All contacts are displayed sorted in ascending alphabetical order of their names.
 
-   3. Test case: `list ascending`
+   3. Test case: `list ascending`  
       Expected: Same behaviour as `list sort`.
 
 3. Listing persons in descending order
 
    1. Prerequisites: Multiple contacts exist with different names.
 
-   2. Test case: `list descending`
+   2. Test case: `list descending`  
       Expected: All contacts are displayed sorted in descending alphabetical order of their names.
 
-   3. Test case: `list reverse`
+   3. Test case: `list reverse`  
       Expected: Same behaviour as `list descending`.
 
 4. Invalid list commands
 
-   1. Test case: `list abc`
+   1. Test case: `list abc`  
       Expected: Error message shown indicating invalid command format.
 
-   2. Test case: `list sort abc`
+   2. Test case: `list sort abc`  
       Expected: Error message shown indicating invalid command format.
 
-   3. Test case: `list ascending descending`
+   3. Test case: `list ascending descending`  
       Expected: Error message shown indicating invalid command format.
 
 ### Saving data
@@ -600,5 +602,3 @@ testers are expected to do more *exploratory* testing.
 1. Dealing with missing/corrupted data files
 
    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
-
-1. _{ more test cases …​ }_
