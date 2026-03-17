@@ -14,7 +14,7 @@ import seedu.address.model.person.Person;
 /**
  * Asks user for confirmation for deleting a person identified using it's displayed index from the address book.
  */
-public class ConfirmDeleteCommand extends Command {
+public class ConfirmDeleteCommand extends ConfirmCommand {
 
     public static final String COMMAND_WORD = "delete";
 
@@ -28,23 +28,24 @@ public class ConfirmDeleteCommand extends Command {
 
     private final Index targetIndex;
 
+    /**
+     * Creates a ConfirmDeleteCommand to add the specified {@code Person}
+     */
     public ConfirmDeleteCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
     }
 
     @Override
-    public CommandResult execute(Model model) throws CommandException {
+    protected String getConfirmationMessage(Model model) throws CommandException {
         requireNonNull(model);
         List<Person> lastShownList = model.getSortedFilteredPersonList();
 
-        // we want to make sure the specified index is valid before asking for confirmation
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
         Person personToDelete = lastShownList.get(targetIndex.getZeroBased());
-        return new CommandResult(String.format(MESSAGE_ASK_CONFIRMATION, Messages.format(personToDelete)),
-                false, false, true);
+        return String.format(MESSAGE_ASK_CONFIRMATION, Messages.format(personToDelete));
     }
 
     @Override

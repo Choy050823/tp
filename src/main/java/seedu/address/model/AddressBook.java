@@ -76,6 +76,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Adds a person to the address book even if an equivalent person already exists.
+     */
+    public void addPersonAllowingDuplicate(Person p) {
+        persons.addAllowingDuplicate(p);
+    }
+
+    /**
      * Replaces the given person {@code target} in the list with {@code editedPerson}.
      * {@code target} must exist in the address book.
      * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.

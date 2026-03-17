@@ -21,6 +21,7 @@ import org.junit.jupiter.api.io.TempDir;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.ConfirmAddCommand;
 import seedu.address.logic.commands.ConfirmDeleteCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.ListCommand;
@@ -238,4 +239,118 @@ public class LogicManagerTest {
         expectedModel.addPerson(expectedPerson);
         assertCommandFailure(addCommand, CommandException.class, expectedMessage, expectedModel);
     }
+
+    /**
+     * Executes {@code AddCommand} twice and verifies that adding a duplicate person
+     * triggers a confirmation prompt instead of being added immediately.
+     */
+    @Test
+    public void executeAddDuplicatePerson_requiresConfirmation() throws Exception {
+        String addCommand = AddCommand.COMMAND_WORD + ROLE_DESC_AMY + NAME_DESC_AMY
+                + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
+        Person expectedPerson = new PersonBuilder(AMY).withTags().build();
+
+        logic.execute(addCommand);
+
+        CommandResult result = logic.execute(addCommand);
+
+        assertEquals(
+                String.format(ConfirmAddCommand.MESSAGE_CONFIRM_DUPLICATE_PERSON, Messages.format(expectedPerson)),
+                result.getFeedbackToUser());
+        assertEquals(1, model.getAddressBook().getPersonList().size());
+    }
+
+    /**
+     * Executes {@code AddCommand} on a duplicate person, confirms the operation,
+     * and verifies that the duplicate person is added successfully.
+     */
+    @Test
+    public void executeAddDuplicatePerson_confirmed_success() throws Exception {
+        String addCommand = AddCommand.COMMAND_WORD + ROLE_DESC_AMY + NAME_DESC_AMY
+                + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
+        Person expectedPerson = new PersonBuilder(AMY).withTags().build();
+
+        logic.execute(addCommand);
+        logic.execute(addCommand);
+        CommandResult result = logic.execute("y");
+
+        assertEquals(
+                String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(expectedPerson)),
+                result.getFeedbackToUser());
+        assertEquals(2, model.getAddressBook().getPersonList().size());
+    }
+
+    /**
+     * Executes {@code AddCommand} on a duplicate person, rejects the confirmation,
+     * and verifies that no additional person is added.
+     */
+    @Test
+    public void executeAddDuplicatePerson_cancelled_success() throws Exception {
+        String addCommand = AddCommand.COMMAND_WORD + ROLE_DESC_AMY + NAME_DESC_AMY
+                + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
+
+        logic.execute(addCommand);
+        logic.execute(addCommand);
+        CommandResult result = logic.execute("n");
+
+        assertEquals("", result.getFeedbackToUser());
+        assertEquals(1, model.getAddressBook().getPersonList().size());
+    }
+
+    /**
+     * Executes {@code DeleteCommand} and verifies that the command requires
+     * confirmation before the person is deleted.
+     */
+    @Test
+    public void executeDeleteCommand_requiresConfirmation() throws Exception {
+        String addCommand = AddCommand.COMMAND_WORD + ROLE_DESC_AMY + NAME_DESC_AMY
+                + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
+        logic.execute(addCommand);
+
+        Person expectedPerson = new PersonBuilder(AMY).withTags().build();
+
+        CommandResult result = logic.execute(DeleteCommand.COMMAND_WORD + " 1");
+
+        assertEquals(
+                String.format(ConfirmDeleteCommand.MESSAGE_ASK_CONFIRMATION, Messages.format(expectedPerson)),
+                result.getFeedbackToUser());
+        assertEquals(1, model.getAddressBook().getPersonList().size());
+    }
+
+    /**
+     * Executes {@code DeleteCommand}, confirms the operation, and verifies that
+     * the person is deleted successfully.
+     */
+    @Test
+    public void executeDeleteCommand_confirmed_success() throws Exception {
+        String addCommand = AddCommand.COMMAND_WORD + ROLE_DESC_AMY + NAME_DESC_AMY
+                + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
+        logic.execute(addCommand);
+
+        Person expectedPerson = new PersonBuilder(AMY).withTags().build();
+
+        logic.execute(DeleteCommand.COMMAND_WORD + " 1");
+        CommandResult result = logic.execute("y");
+
+        assertEquals(
+                String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(expectedPerson)),
+                result.getFeedbackToUser());
+        assertEquals(0, model.getAddressBook().getPersonList().size());
+    }
+
+    /**
+     * Executes a command that is awaiting confirmation and verifies that any input
+     * other than {@code y} or {@code n} results in a {@code ParseException}.
+     */
+    @Test
+    public void executeCommandAwaitingConfirmation_invalidInput_throwsParseException() throws Exception {
+        String addCommand = AddCommand.COMMAND_WORD + ROLE_DESC_AMY + NAME_DESC_AMY
+                + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
+
+        logic.execute(addCommand);
+        logic.execute(addCommand);
+
+        assertParseException("maybe", seedu.address.logic.Messages.MESSAGE_ONLY_YES_NO);
+    }
+
 }
