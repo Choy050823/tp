@@ -80,7 +80,6 @@ public class Person {
         }
 
         return otherPerson != null
-                && otherPerson.getRole().equals(getRole())
                 && otherPerson.getName().equals(getName());
     }
 
