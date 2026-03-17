@@ -636,10 +636,10 @@ testers are expected to do more *exploratory* testing.
 3. Listing persons in descending order
 
     1. Prerequisites: Multiple contacts exist with different names.
-    
+
     2. Test case: `list descending`
        Expected: All contacts are displayed sorted in descending alphabetical order of their names.
-    
+
     3. Test case: `list reverse`
        Expected: Same behaviour as `list descending`.
 
