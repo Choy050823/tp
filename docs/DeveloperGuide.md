@@ -580,11 +580,18 @@ testers are expected to do more *exploratory* testing.
 
 3. _{ more test cases …​ }_
 
-### Adding a duplicate person
+### Adding a person
 
-1. Adding a duplicate person while all persons are being shown
+1. Adding a non-duplicate person
 
-    1. Prerequisites: The app already contains a contact named `John Doe` with the same details as the one to be added.
+    1. Prerequisites: The person to be added does not already exist in the address book.
+
+    2. Test case: `add -r President -n John Doe -p 98765432 -e johnd@example.com -a John street, block 123, #01-01`<br>
+       Expected: The person is added immediately. A success message showing the added contact is displayed. The contact list is updated accordingly.
+
+2. Adding a duplicate person
+
+    1. Prerequisites: The address book already contains `John Doe` with the same details.
 
     2. Test case: `add -r President -n John Doe -p 98765432 -e johnd@example.com -a John street, block 123, #01-01` followed by `y`<br>
        Expected: A confirmation prompt indicating that the person already exists is shown. After entering `y`, the duplicate contact is added successfully.
@@ -594,6 +601,17 @@ testers are expected to do more *exploratory* testing.
 
     4. Test case: `add -r President -n John Doe -p 98765432 -e johnd@example.com -a John street, block 123, #01-01` followed by an invalid confirmation input such as `maybe`<br>
        Expected: The application reports that only `y` or `n` is accepted as confirmation input.
+
+3. Invalid add commands
+
+    1. Test case: `add -n John Doe -p 98765432 -e johnd@example.com -a John street, block 123, #01-01`<br>
+       Expected: Error message shown indicating missing required fields.
+
+    2. Test case: `add -r President -n John Doe -p invalid -e johnd@example.com -a John street, block 123, #01-01`<br>
+       Expected: Error message shown indicating invalid phone number format.
+
+    3. Test case: `add -r President -n John Doe -p 98765432 -e invalid -a John street, block 123, #01-01`<br>
+       Expected: Error message shown indicating invalid email format.
 
 ### Deleting a person
 
@@ -616,6 +634,7 @@ testers are expected to do more *exploratory* testing.
 2. _{ more test cases …​ }_
 
 ### Listing persons
+
 1. Listing persons without sorting
 
     1. Prerequisites: The app contains multiple contacts with different names.

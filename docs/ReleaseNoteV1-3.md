@@ -4,6 +4,7 @@
 
 ### Changes to MVP - Feature 1
 - **Duplicate Add Command Option:** Added a `[y/n]` user confirmation prompt to the `add` command to warn the user from adding duplicate contacts.
+- **:**
 
 ### Changes to MVP - Feature 2
 - XXX
@@ -36,7 +37,7 @@ Using `list reverse` command to display contacts in reverse order:
 -
 
 ### Bug Fixes
-- None
+- Fixed an issue where the address book failed to load contact entries correctly when duplicate names existed.
 
 ### Documentation
 - Updated the User Guide.

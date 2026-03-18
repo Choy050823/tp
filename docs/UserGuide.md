@@ -207,7 +207,7 @@ Format: `delete INDEX`
 
 Examples:
 * `list` followed by `delete 2` prompts confirmation for deleting the 2nd person in the address book.
-* `find Betsy` followed by `delete 1` prompts confirmation for deleting the 1st person in the results of the `find` command.
+* `find name Betsy` followed by `delete 1` prompts confirmation for deleting the 1st person in the results of the `find` command.
 
 ### Clearing all entries : `clear`
 
@@ -262,6 +262,6 @@ Action | Format, Examples
 **Clear** | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
 **Edit** | `edit INDEX [-r ROLE] [-n NAME] [-p PHONE_NUMBER] [-e EMAIL] [-a ADDRESS] [-t TAG]…​`<br> e.g.,`edit 2 -n James Lee -e jameslee@example.com`
-**Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
+**Find** | `find FIELD KEYWORD [MORE_KEYWORDS]`<br> e.g., `find name James Jake`
 **List** | `list`
 **Help** | `help`
