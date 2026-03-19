@@ -686,7 +686,7 @@ testers are expected to do more *exploratory* testing.
        Expected: Error message shown indicating invalid command format.
 
     2. Test case: `find @@@`  
-       Expected: Error message shown or no results returned depending on input validation rules.
+       Expected: Error message shown indicating invalid command format.
 
 ### Listing persons
 
