@@ -120,6 +120,12 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void addPersonAllowingDuplicate(Person person) {
+        addressBook.addPersonAllowingDuplicate(person);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+    }
+
+    @Override
     public void setPerson(Person target, Person editedPerson) {
         requireAllNonNull(target, editedPerson);
 

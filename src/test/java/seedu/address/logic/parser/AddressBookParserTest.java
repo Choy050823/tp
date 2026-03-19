@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.ConfirmAddCommand;
 import seedu.address.logic.commands.ConfirmDeleteCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -132,17 +133,18 @@ public class AddressBookParserTest {
     }
 
     @Test
+    public void parseCommandWithConfirmation_add() throws Exception {
+        Person person = new PersonBuilder().build();
+        ConfirmAddCommand command =
+                (ConfirmAddCommand) parser.parseCommandWithConfirmation(PersonUtil.getAddCommand(person));
+        assertEquals(new ConfirmAddCommand(person), command);
+    }
+
+    @Test
     public void parseCommandWithConfirmation_delete() throws Exception {
         ConfirmDeleteCommand command = (ConfirmDeleteCommand) parser.parseCommandWithConfirmation(
                 ConfirmDeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new ConfirmDeleteCommand(INDEX_FIRST_PERSON), command);
-    }
-
-    @Test
-    public void parseCommandWithConfirmation_add() throws Exception {
-        Person person = new PersonBuilder().build();
-        AddCommand command = (AddCommand) parser.parseCommandWithConfirmation(PersonUtil.getAddCommand(person));
-        assertEquals(new AddCommand(person), command);
     }
 
     @Test
@@ -224,4 +226,5 @@ public class AddressBookParserTest {
         assertThrows(ParseException.class, String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE), ()
                 -> parser.parseYesNo("   "));
     }
+
 }

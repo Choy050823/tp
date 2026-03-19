@@ -3,7 +3,7 @@ layout: page
 title: Developer Guide
 ---
 * Table of Contents
-{:toc}
+  {:toc}
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -155,6 +155,50 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
+### Confirmation flow for `add` and `delete`
+
+The application supports a shared confirmation workflow for commands that should not be executed immediately.
+
+For `delete`, confirmation is always required before the actual deletion is performed.
+
+For `add`, confirmation is only required when the person being added already exists in the address book. Non-duplicate contacts are added immediately without any confirmation prompt.
+
+This shared behavior is implemented using an interface `ConfirmCommand`. Concrete subclasses such as `ConfirmDeleteCommand` and `ConfirmAddCommand` inherit from its base classes (`AddCommand` and `DeleteCommand`), while implementing `ConfirmCommand` and providing command-specific validation and confirmation messages.
+
+#### Implementation
+
+When the user enters a command, `LogicManager` first calls `AddressBookParser#parseCommandWithConfirmation(...)`.
+
+If the command does not require confirmation, it is executed normally.
+
+If the command requires confirmation, a corresponding `ConfirmCommand` subclass is executed first:
+- `ConfirmDeleteCommand` for `delete`
+- `ConfirmAddCommand` for duplicate `add`
+
+These confirmation commands do not perform the final action immediately. Instead, they return a `CommandResult` indicating that the application is awaiting confirmation input.
+
+`LogicManager` then enters a temporary confirmation state and stores the actual command that should be executed later if the user confirms.
+
+After that:
+- if the user enters `y`, the stored command is executed
+- if the user enters `n`, the operation is cancelled
+- if the user enters any other input, the application reports an invalid confirmation input
+
+For duplicate `add`, the stored command is a confirmed `AddCommand`, which force-adds the duplicate contact after the user explicitly confirms. This keeps the confirmation decision in `ConfirmAddCommand` while leaving the actual insertion to `AddCommand`.
+
+#### Design rationale
+
+This design separates:
+- confirmation handling
+- actual command execution
+
+As a result:
+- shared confirmation logic can be reused across multiple commands
+- `ConfirmDeleteCommand` and `ConfirmAddCommand` avoid duplicating common confirmation flow
+- the actual `AddCommand` and `DeleteCommand` remain focused on performing the final data modification
+
+For duplicate `add`, this design also allows normal non-duplicate additions to proceed immediately, while still protecting the user from accidentally adding duplicate contacts.
+
 ### \[Proposed\] Undo/redo feature
 
 #### Proposed Implementation
@@ -177,7 +221,7 @@ Step 2. The user executes `delete 5` command to delete the 5th person in the add
 
 ![UndoRedoState1](images/UndoRedoState1.png)
 
-Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
+Step 3. The user executes `add -n David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
 
 ![UndoRedoState2](images/UndoRedoState2.png)
 
@@ -216,7 +260,7 @@ Step 5. The user then decides to execute the command `list`. Commands that do no
 
 ![UndoRedoState4](images/UndoRedoState4.png)
 
-Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
+Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add -n David …​` command. This is the behavior that most modern desktop applications follow.
 
 ![UndoRedoState5](images/UndoRedoState5.png)
 
@@ -229,13 +273,13 @@ The following activity diagram summarizes what happens when a user executes a ne
 **Aspect: How undo & redo executes:**
 
 * **Alternative 1 (current choice):** Saves the entire address book.
-  * Pros: Easy to implement.
-  * Cons: May have performance issues in terms of memory usage.
+    * Pros: Easy to implement.
+    * Cons: May have performance issues in terms of memory usage.
 
 * **Alternative 2:** Individual command knows how to undo/redo by
   itself.
-  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
-  * Cons: We must ensure that the implementation of each individual command are correct.
+    * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
+    * Cons: We must ensure that the implementation of each individual command are correct.
 
 _{more aspects and alternatives to be added}_
 
@@ -383,7 +427,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * Use case ends.
 * 3b. CampusConnect detects a duplicate contact (same name and committee).
     * 3b1. CampusConnect warns Marcus about the potential duplicate.
-    * 3b2. Marcus chooses to either cancel the entry or proceed with a unique identifier.
+    * 3b2. Marcus chooses to either cancel the entry or proceed with confirmation.
     * Use case resumes at step 4.
 
 ---
@@ -523,82 +567,115 @@ testers are expected to do more *exploratory* testing.
 
 1. Initial launch
 
-   1. Download the jar file and copy into an empty folder
+    1. Download the jar file and copy into an empty folder
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+    2. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
-1. Saving window preferences
+2. Saving window preferences
 
-   1. Resize the window to an optimum size. Move the window to a different location. Close the window.
+    1. Resize the window to an optimum size. Move the window to a different location. Close the window.
 
-   1. Re-launch the app by double-clicking the jar file.<br>
+    2. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
 ### Adding a person
-1. TODO: Add test cases for `add` command.
+
+1. Adding a non-duplicate person
+
+    1. Prerequisites: The person to be added does not already exist in the address book.
+
+    2. Test case: `add -r President -n John Doe -p 98765432 -e johnd@example.com -a John street, block 123, #01-01`<br>
+       Expected: The person is added immediately. A success message showing the added contact is displayed. The contact list is updated accordingly.
+
+2. Adding a duplicate person
+
+    1. Prerequisites: The address book already contains `John Doe` with the same details.
+
+    2. Test case: `add -r President -n John Doe -p 98765432 -e johnd@example.com -a John street, block 123, #01-01` followed by `y`<br>
+       Expected: A confirmation prompt indicating that the person already exists is shown. After entering `y`, the duplicate contact is added successfully.
+
+    3. Test case: `add -r President -n John Doe -p 98765432 -e johnd@example.com -a John street, block 123, #01-01` followed by `n`<br>
+       Expected: A confirmation prompt indicating that the person already exists is shown. After entering `n`, the operation is cancelled and no additional contact is added.
+
+    4. Test case: `add -r President -n John Doe -p 98765432 -e johnd@example.com -a John street, block 123, #01-01` followed by an invalid confirmation input such as `maybe`<br>
+       Expected: The application reports that only `y` or `n` is accepted as confirmation input.
+
+3. Invalid add commands
+
+    1. Test case: `add -n John Doe -p 98765432 -e johnd@example.com -a John street, block 123, #01-01`<br>
+       Expected: Error message shown indicating missing required fields.
+
+    2. Test case: `add -r President -n John Doe -p invalid -e johnd@example.com -a John street, block 123, #01-01`<br>
+       Expected: Error message shown indicating invalid phone number format.
+
+    3. Test case: `add -r President -n John Doe -p 98765432 -e invalid -a John street, block 123, #01-01`<br>
+       Expected: Error message shown indicating invalid email format.
 
 ### Deleting a person
 
 1. Deleting a person while all persons are being shown
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+    1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
 
-   1. Test case: `delete 1` followed by `y`<br>
-      Expected: A confirmation prompt `Are you sure you want to delete the contact [Contact Details]? [y/n]` is shown. After entering `y`, the first contact is deleted from the list. The success message `Successfully Deleted Person: [Contact Details]` is shown in the status message. Timestamp in the status bar is updated.
+    2. Test case: `delete 1` followed by `y`<br>
+       Expected: A confirmation prompt `Are you sure you want to delete the contact [Contact Details]? [y/n]` is shown. After entering `y`, the first contact is deleted from the list. The success message `Successfully Deleted Person: [Contact Details]` is shown in the status message. Timestamp in the status bar is updated.
 
-   1. Test case: `delete 1` followed by `n`<br>
-      Expected: A confirmation prompt `Are you sure you want to delete the contact [Contact Details]? [y/n]` is shown. After entering `n`, the deletion is aborted. No person is deleted and the list remains unchanged.
+    3. Test case: `delete 1` followed by `n`<br>
+       Expected: A confirmation prompt `Are you sure you want to delete the contact [Contact Details]? [y/n]` is shown. After entering `n`, the deletion is aborted. No person is deleted and the list remains unchanged.
 
-   1. Test case: `delete 0`<br>
-      Expected: No confirmation prompt is shown. No person is deleted. Error details (indicating INDEX must be a positive number) are shown in the status message. Status bar remains the same.
+    4. Test case: `delete 0`<br>
+       Expected: No confirmation prompt is shown. No person is deleted. Error details (indicating INDEX must be a positive number) are shown in the status message. Status bar remains the same.
 
-   1. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size), `delete abc`<br>
-      Expected: Similar to the previous case. An invalid command or out-of-bounds error is shown immediately without triggering the confirmation prompt.
+    5. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size), `delete abc`<br>
+       Expected: Similar to the previous case. An invalid command or out-of-bounds error is shown immediately without triggering the confirmation prompt.
+
 
 ### Finding persons
 1. TODO: Add test cases for `find` command.
 
 ### Listing persons
+
 1. Listing persons without sorting
 
-   1. Prerequisites: The app contains multiple contacts with different names.
+    1. Prerequisites: The app contains multiple contacts with different names.
 
-   2. Test case: `list`   
+    2. Test case: `list`
       Expected: All contacts are displayed in their default order.
 
 2. Listing persons in ascending order
 
-   1. Prerequisites: Multiple contacts exist with different names.
+    1. Prerequisites: Multiple contacts exist with different names.
 
-   2. Test case: `list sort`  
-      Expected: All contacts are displayed sorted in ascending alphabetical order of their names.
+    2. Test case: `list sort`
+       Expected: All contacts are displayed sorted in ascending alphabetical order of their names.
 
-   3. Test case: `list ascending`  
-      Expected: Same behaviour as `list sort`.
+    3. Test case: `list ascending`
+       Expected: Same behaviour as `list sort`.
 
 3. Listing persons in descending order
 
-   1. Prerequisites: Multiple contacts exist with different names.
+    1. Prerequisites: Multiple contacts exist with different names.
 
-   2. Test case: `list descending`  
-      Expected: All contacts are displayed sorted in descending alphabetical order of their names.
+    2. Test case: `list descending`
+       Expected: All contacts are displayed sorted in descending alphabetical order of their names.
 
-   3. Test case: `list reverse`  
-      Expected: Same behaviour as `list descending`.
+    3. Test case: `list reverse`
+       Expected: Same behaviour as `list descending`.
 
 4. Invalid list commands
 
-   1. Test case: `list abc`  
-      Expected: Error message shown indicating invalid command format.
+    1. Test case: `list abc`
+       Expected: Error message shown indicating invalid command format.
 
-   2. Test case: `list sort abc`  
-      Expected: Error message shown indicating invalid command format.
+    2. Test case: `list sort abc`
+       Expected: Error message shown indicating invalid command format.
 
-   3. Test case: `list ascending descending`  
-      Expected: Error message shown indicating invalid command format.
+    3. Test case: `list ascending descending`
+       Expected: Error message shown indicating invalid command format.
 
 ### Saving data
 
 1. Dealing with missing/corrupted data files
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+
