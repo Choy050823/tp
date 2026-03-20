@@ -1,15 +1,16 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
+import java.util.List;
+
 import seedu.address.logic.Messages;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
-
+/**
+ * Asks user for confirmation before clearing all currently listed contacts.
+ */
 public class ConfirmClearCommand extends ClearCommand implements ConfirmCommand {
     public static final String MESSAGE_ASK_CONFIRMATION =
             "Are you sure you want to clear the listed contacts? [y/n] %1$s";
@@ -43,11 +44,6 @@ public class ConfirmClearCommand extends ClearCommand implements ConfirmCommand 
             return true;
         }
 
-        // instanceof handles nulls
-        if (!(other instanceof ConfirmClearCommand confirmClearCommand)) {
-            return false;
-        }
-
-        return this.equals(confirmClearCommand);
+        return other instanceof ConfirmClearCommand;
     }
 }

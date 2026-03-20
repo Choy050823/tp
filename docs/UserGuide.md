@@ -55,7 +55,7 @@ CampusConnect is a **desktop app for managing contacts, optimized for use via a 
 
   * `delete 3` : Deletes the 3rd contact shown in the current list.
 
-  * `clear` : Deletes all contacts.
+  * `clear` : Deletes listed/filtered contacts.
 
   * `exit` : Exits the app.
 
@@ -233,9 +233,9 @@ Examples:
 * `list` followed by `delete 2` prompts confirmation for deleting the 2nd person in the address book.
 * `find name Betsy` followed by `delete 1` prompts confirmation for deleting the 1st person in the results of the `find` command.
 
-### Clearing all entries : `clear`
+### Clearing listed/filtered entries : `clear`
 
-Clears all entries from the address book.
+Clears listed/filtered entries currently shown in the address book.
 
 Format: `clear`
 
