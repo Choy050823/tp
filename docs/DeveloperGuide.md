@@ -679,35 +679,35 @@ testers are expected to do more *exploratory* testing.
 
    1. Prerequisites: The app contains multiple contacts with different names.
 
-   2. Test case: `find John`  
+   2. Test case: `find John`
       Expected: All contacts with names containing "John" are displayed.
 
-   3. Test case: `find alice`  
+   3. Test case: `find alice`
       Expected: Contacts matching "alice" are displayed (case-insensitive).
 
-   4. Test case: `find John; alice`  
+   4. Test case: `find John; alice`
         Expected: Contacts matching "John" and "alice" are displayed (case-insensitive).
 
 2. Finding persons by partial match
 
     1. Prerequisites: The app contains contacts such as "Jonathan", "Johnny", "John Doe".
 
-    2. Test case: `find John`  
+    2. Test case: `find John`
        Expected: All contacts with names containing "John" (e.g., "Jonathan", "Johnny", "John Doe") are displayed.
 
 3. Finding persons with no matches
 
     1. Prerequisites: The app contains multiple contacts.
 
-    2. Test case: `find xyz`  
+    2. Test case: `find xyz`
        Expected: No contacts are displayed. A message indicating no matches found is shown.
 
 4. Invalid find commands
 
-    1. Test case: `find`  
+    1. Test case: `find`
        Expected: Error message shown indicating invalid command format.
 
-    2. Test case: `find @@@`  
+    2. Test case: `find @@@`
        Expected: Error message shown indicating invalid command format.
 
 ### Listing persons
@@ -716,38 +716,38 @@ testers are expected to do more *exploratory* testing.
 
     1. Prerequisites: The app contains multiple contacts with different names.
 
-    2. Test case: `list`  
+    2. Test case: `list`
       Expected: All contacts are displayed in their default order.
 
 2. Listing persons in ascending order
 
     1. Prerequisites: Multiple contacts exist with different names.
 
-    2. Test case: `list sort`  
+    2. Test case: `list sort`
        Expected: All contacts are displayed sorted in ascending alphabetical order of their names.
 
-    3. Test case: `list ascending`  
+    3. Test case: `list ascending`
        Expected: Same behaviour as `list sort`.
 
 3. Listing persons in descending order
 
     1. Prerequisites: Multiple contacts exist with different names.
 
-    2. Test case: `list descending`  
+    2. Test case: `list descending`
        Expected: All contacts are displayed sorted in descending alphabetical order of their names.
 
-    3. Test case: `list reverse`  
+    3. Test case: `list reverse`
        Expected: Same behaviour as `list descending`.
 
 4. Invalid list commands
 
-    1. Test case: `list abc`  
+    1. Test case: `list abc`
        Expected: Error message shown indicating invalid command format.
 
-    2. Test case: `list sort abc`  
+    2. Test case: `list sort abc`
        Expected: Error message shown indicating invalid command format.
 
-    3. Test case: `list ascending descending`  
+    3. Test case: `list ascending descending`
        Expected: Error message shown indicating invalid command format.
 
 ### Marking a person as busy
