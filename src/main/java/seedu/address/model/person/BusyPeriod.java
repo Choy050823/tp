@@ -100,6 +100,15 @@ public class BusyPeriod {
                 && endDate.equals(otherBusyPeriod.endDate);
     }
 
+    /**
+     * Returns true if this busy period overlaps with another busy period.
+     * @param other
+     * @return true if the two busy periods overlap, false otherwise
+     */
+    public boolean overlapsWith(BusyPeriod other) {
+        return !this.endDate.isBefore(other.startDate) && !this.startDate.isAfter(other.endDate);
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(startDate, endDate);
