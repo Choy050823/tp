@@ -1,7 +1,5 @@
 package seedu.address.model.person;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.function.Predicate;
 
 import seedu.address.commons.util.ToStringBuilder;
