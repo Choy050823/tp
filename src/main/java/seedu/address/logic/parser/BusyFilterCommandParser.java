@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 import seedu.address.logic.commands.BusyFilterCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.BusyInDateRangePredicate;
+import seedu.address.model.person.BusyPeriod;
 
 /**
  * Parses input arguments and creates a new BusyFilterCommand object
@@ -36,7 +37,16 @@ public class BusyFilterCommandParser implements Parser<BusyFilterCommand> {
         String startDateStr = argMultimap.getValue(PREFIX_START_DATE).get();
         String endDateStr = argMultimap.getValue(PREFIX_END_DATE).get();
 
-        BusyInDateRangePredicate predicate = new BusyInDateRangePredicate(startDateStr, endDateStr);
+        if (!BusyPeriod.isValidDateFormat(startDateStr) || !BusyPeriod.isValidDateFormat(endDateStr)) {
+            throw new ParseException(BusyPeriod.MESSAGE_CONSTRAINTS);
+        }
+
+        BusyInDateRangePredicate predicate;
+        try {
+            predicate = new BusyInDateRangePredicate(startDateStr, endDateStr);
+        } catch (IllegalArgumentException e) {
+            throw new ParseException(e.getMessage());
+        }
 
         return new BusyFilterCommand(predicate);
     }
