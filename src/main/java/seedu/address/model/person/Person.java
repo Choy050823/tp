@@ -5,6 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
@@ -28,9 +29,10 @@ public class Person {
     // Data fields
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
+    private final Optional<BusyPeriod> busyPeriod;
 
     /**
-     * Every field must be present and not null.
+     * Every field must be present and not null, except BusyPeriod.
      */
     public Person(Role role, Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
         requireAllNonNull(role, name, phone, email, address, tags);
@@ -40,6 +42,22 @@ public class Person {
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
+        this.busyPeriod = Optional.empty();
+    }
+
+    /**
+     * Every field must be present and not null.
+     */
+    public Person(Role role, Name name, Phone phone, Email email, Address address, Set<Tag> tags,
+                  Optional<BusyPeriod> busyPeriod) {
+        requireAllNonNull(role, name, phone, email, address, tags, busyPeriod);
+        this.role = role;
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.tags.addAll(tags);
+        this.busyPeriod = busyPeriod;
     }
 
     public Role getRole() {
@@ -69,6 +87,15 @@ public class Person {
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags);
     }
+
+    /**
+     * Returns an {@code Optional<BusyPeriod>}.
+     */
+    public Optional<BusyPeriod> getBusyPeriod() {
+        return this.busyPeriod;
+    }
+
+
 
     /**
      * Returns true if both persons have the same identity.
@@ -103,23 +130,26 @@ public class Person {
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
-                && tags.equals(otherPerson.tags);
+                && tags.equals(otherPerson.tags)
+                && busyPeriod.equals(otherPerson.busyPeriod);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(role, name, phone, email, address, tags);
+        return Objects.hash(role, name, phone, email, address, tags, busyPeriod);
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        ToStringBuilder builder = new ToStringBuilder(this)
                 .add("role", role)
                 .add("name", name)
                 .add("phone", phone)
                 .add("email", email)
                 .add("address", address)
-                .add("tags", tags)
-                .toString();
+                .add("tags", tags);
+        busyPeriod.ifPresent(bp -> builder.add("busyPeriod", busyPeriod));
+
+        return builder.toString();
     }
 }

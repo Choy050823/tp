@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.BusyPeriod;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -30,6 +31,8 @@ class JsonAdaptedPerson {
     private final String phone;
     private final String email;
     private final String address;
+    private final String busyStartDate;
+    private final String busyEndDate;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
     /**
@@ -38,12 +41,17 @@ class JsonAdaptedPerson {
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("role") String role, @JsonProperty("name") String name,
                              @JsonProperty("phone") String phone, @JsonProperty("email") String email,
-                             @JsonProperty("address") String address, @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+                             @JsonProperty("address") String address,
+                             @JsonProperty("busyStartDate") String busyStartDate,
+                             @JsonProperty("busyEndDate") String busyEndDate,
+                             @JsonProperty("tags") List<JsonAdaptedTag> tags) {
         this.role = role;
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.busyStartDate = busyStartDate;
+        this.busyEndDate = busyEndDate;
         if (tags != null) {
             this.tags.addAll(tags);
         }
@@ -58,6 +66,8 @@ class JsonAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        busyStartDate = source.getBusyPeriod().map(BusyPeriod::getStartDateString).orElse(null);
+        busyEndDate = source.getBusyPeriod().map(BusyPeriod::getEndDateString).orElse(null);
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
@@ -112,7 +122,25 @@ class JsonAdaptedPerson {
         }
         final Address modelAddress = new Address(address);
 
+        if (busyStartDate != null && !BusyPeriod.isValidDateFormat(busyStartDate)) {
+            throw new IllegalValueException(BusyPeriod.MESSAGE_CONSTRAINTS);
+        }
+        if (busyEndDate != null && !BusyPeriod.isValidDateFormat(busyEndDate)) {
+            throw new IllegalValueException(BusyPeriod.MESSAGE_CONSTRAINTS);
+        }
+
+        java.util.Optional<BusyPeriod> modelBusyPeriod;
+        if (busyStartDate != null && busyEndDate != null) {
+            try {
+                modelBusyPeriod = java.util.Optional.of(new BusyPeriod(busyStartDate, busyEndDate));
+            } catch (IllegalArgumentException e) {
+                throw new IllegalValueException(e.getMessage());
+            }
+        } else {
+            modelBusyPeriod = java.util.Optional.empty();
+        }
+
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelRole, modelName, modelPhone, modelEmail, modelAddress, modelTags);
+        return new Person(modelRole, modelName, modelPhone, modelEmail, modelAddress, modelTags, modelBusyPeriod);
     }
 }

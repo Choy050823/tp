@@ -1,9 +1,11 @@
 package seedu.address.testutil;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.model.person.Address;
+import seedu.address.model.person.BusyPeriod;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -28,6 +30,7 @@ public class PersonBuilder {
     private Email email;
     private Address address;
     private Set<Tag> tags;
+    private Optional<BusyPeriod> busyPeriod;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
@@ -39,6 +42,7 @@ public class PersonBuilder {
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
         tags = new HashSet<>();
+        busyPeriod = Optional.empty();
     }
 
     /**
@@ -51,6 +55,7 @@ public class PersonBuilder {
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
         tags = new HashSet<>(personToCopy.getTags());
+        busyPeriod = personToCopy.getBusyPeriod();
     }
 
     /**
@@ -101,7 +106,15 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code BusyPeriod} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withBusyPeriod(String startDate, String endDate) {
+        this.busyPeriod = Optional.of(new BusyPeriod(startDate, endDate));
+        return this;
+    }
+
     public Person build() {
-        return new Person(role, name, phone, email, address, tags);
+        return new Person(role, name, phone, email, address, tags, busyPeriod);
     }
 }

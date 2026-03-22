@@ -15,6 +15,7 @@ title: Developer Guide
     - [Common classes](#common-classes)
 - [Implementation](#implementation)
     - [Confirmation flow for `add` and `delete`](#confirmation-flow-for-add-and-delete)
+    - [Busy status feature](#busy-status-feature)
     - [[Proposed] Undo/redo feature](#proposed-undoredo-feature)
     - [[Proposed] Data archiving](#proposed-data-archiving)
 - [Documentation, logging, testing, configuration, dev-ops](#documentation-logging-testing-configuration-dev-ops)
@@ -30,6 +31,7 @@ title: Developer Guide
     - [Deleting a person](#deleting-a-person)
     - [Finding persons](#finding-persons)
     - [Listing persons](#listing-persons)
+    - [Marking a person as busy](#marking-a-person-as-busy)
     - [Saving data](#saving-data)
 
 --------------------------------------------------------------------------------------------------------------------
@@ -225,6 +227,26 @@ As a result:
 - the actual `AddCommand` and `DeleteCommand` remain focused on performing the final data modification
 
 For duplicate `add`, this design also allows normal non-duplicate additions to proceed immediately, while still protecting the user from accidentally adding duplicate contacts.
+
+### Busy status feature
+
+The busy status feature allows users to mark a contact as unavailable for a specific period. This is implemented through the `BusyCommand` and the `BusyPeriod` model.
+
+#### Implementation
+
+The `BusyPeriod` class represents the time interval during which a person is busy. It consists of a `startDate` and an `endDate` (both `LocalDate`).
+
+**Key aspects of the implementation:**
+* **Strict Date Validation:** The `BusyPeriod` uses `DateTimeFormatter` with `ResolverStyle.STRICT` to ensure that dates are valid (e.g., February 29th is only accepted on leap years, and April 31st is rejected).
+* **Logical Validation:** The constructor ensures that the `startDate` is chronologically before or equal to the `endDate`.
+* **Immutability:** `BusyPeriod` is an immutable class, consistent with other model components like `Name` and `Phone`.
+* **Integration with `Person`:** Each `Person` object now contains an `Optional<BusyPeriod>`.
+* **Storage:** The `JsonAdaptedPerson` was updated to persist `busyStartDate` and `busyEndDate` strings, which are then used to reconstruct the `BusyPeriod` during data loading.
+* **UI:** `PersonCard` was updated to display the busy period if it exists. The label is styled with a distinct color to make it easily identifiable.
+
+#### Design rationale
+
+By using an `Optional<BusyPeriod>` in the `Person` class, we maintain backward compatibility with contacts that don't have a busy status. The decision to use strict date resolution prevents subtle bugs where users might input non-existent dates that are silently "rounded" by the default Java date parser.
 
 ### \[Proposed\] Undo/redo feature
 
@@ -657,35 +679,35 @@ testers are expected to do more *exploratory* testing.
 
    1. Prerequisites: The app contains multiple contacts with different names.
 
-   2. Test case: `find John`  
+   2. Test case: `find John`
       Expected: All contacts with names containing "John" are displayed.
 
-   3. Test case: `find alice`  
+   3. Test case: `find alice`
       Expected: Contacts matching "alice" are displayed (case-insensitive).
 
-   4. Test case: `find John; alice`  
+   4. Test case: `find John; alice`
         Expected: Contacts matching "John" and "alice" are displayed (case-insensitive).
 
 2. Finding persons by partial match
 
     1. Prerequisites: The app contains contacts such as "Jonathan", "Johnny", "John Doe".
 
-    2. Test case: `find John`  
+    2. Test case: `find John`
        Expected: All contacts with names containing "John" (e.g., "Jonathan", "Johnny", "John Doe") are displayed.
 
 3. Finding persons with no matches
 
     1. Prerequisites: The app contains multiple contacts.
 
-    2. Test case: `find xyz`  
+    2. Test case: `find xyz`
        Expected: No contacts are displayed. A message indicating no matches found is shown.
 
 4. Invalid find commands
 
-    1. Test case: `find`  
+    1. Test case: `find`
        Expected: Error message shown indicating invalid command format.
 
-    2. Test case: `find @@@`  
+    2. Test case: `find @@@`
        Expected: Error message shown indicating invalid command format.
 
 ### Listing persons
@@ -694,39 +716,66 @@ testers are expected to do more *exploratory* testing.
 
     1. Prerequisites: The app contains multiple contacts with different names.
 
-    2. Test case: `list`  
+    2. Test case: `list`
       Expected: All contacts are displayed in their default order.
 
 2. Listing persons in ascending order
 
     1. Prerequisites: Multiple contacts exist with different names.
 
-    2. Test case: `list sort`  
+    2. Test case: `list sort`
        Expected: All contacts are displayed sorted in ascending alphabetical order of their names.
 
-    3. Test case: `list ascending`  
+    3. Test case: `list ascending`
        Expected: Same behaviour as `list sort`.
 
 3. Listing persons in descending order
 
     1. Prerequisites: Multiple contacts exist with different names.
 
-    2. Test case: `list descending`  
+    2. Test case: `list descending`
        Expected: All contacts are displayed sorted in descending alphabetical order of their names.
 
-    3. Test case: `list reverse`  
+    3. Test case: `list reverse`
        Expected: Same behaviour as `list descending`.
 
 4. Invalid list commands
 
-    1. Test case: `list abc`  
+    1. Test case: `list abc`
        Expected: Error message shown indicating invalid command format.
 
-    2. Test case: `list sort abc`  
+    2. Test case: `list sort abc`
        Expected: Error message shown indicating invalid command format.
 
-    3. Test case: `list ascending descending`  
+    3. Test case: `list ascending descending`
        Expected: Error message shown indicating invalid command format.
+
+### Marking a person as busy
+
+1. Marking a person as busy with valid dates
+
+    1. Prerequisites: Multiple persons in the list.
+
+    2. Test case: `busy 1 -s 25/03/2026 -e 28/03/2026`<br>
+       Expected: The first person is marked as busy. A success message is shown. The person's card in the UI displays the busy period.
+
+2. Overwriting an existing busy period
+
+    1. Prerequisites: The first person already has a busy period.
+
+    2. Test case: `busy 1 -s 01/04/2026 -e 05/04/2026`<br>
+       Expected: The existing busy period is overwritten with the new one. Success message and UI update accordingly.
+
+3. Invalid busy commands
+
+    1. Test case: `busy 1 -s 31/04/2026 -e 01/05/2026` (Strict date validation: April only has 30 days)<br>
+       Expected: Error message shown indicating that dates must follow the DD/MM/YYYY format and be valid calendar dates.
+
+    2. Test case: `busy 1 -s 28/03/2026 -e 25/03/2026` (Start date after end date)<br>
+       Expected: Error message shown: "The start date cannot be later than the end date."
+
+    3. Test case: `busy x -s 25/03/2026 -e 28/03/2026` (where x is out of bounds)<br>
+       Expected: Error message shown indicating invalid person displayed index.
 
 ### Saving data
 
