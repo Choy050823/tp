@@ -558,12 +558,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1. Marcus instructs the application to mark the nth contact as busy from a start date to an end date.
 2. CampusConnect validates the dates and the selected contact.
 3. CampusConnect overwrites any existing busy period for the contact with the new dates.
-4. CampusConnect confirms the update and displays the contact’s updated profile.  
+4. CampusConnect confirms the update and displays the contact’s updated profile.<br>
    Use case ends.
 
 **Extensions:**
 
-* 2a. Marcus enters an invalid date format or the end date is before the start date. 
+* 2a. Marcus enters an invalid date format or the end date is before the start date.
   * 2a1. CampusConnect displays an error message explaining the correct format and constraints.
   * 2a2. Marcus re-enters the command with valid dates.<br>
   Use case resumes at step 1.
@@ -590,7 +590,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 2a2. Marcus re-enters the command with valid dates.<br>
     Use case resumes at step 1.
 * 4a. No contacts are busy during the specified period.
-    * 4a1. CampusConnect displays a “No busy contacts found” message. 
+    * 4a1. CampusConnect displays a “No busy contacts found” message.<br>
     Use case ends.
 
 ---
@@ -834,7 +834,7 @@ testers are expected to do more *exploratory* testing.
 
     1. Prerequisites: No persons have busy periods overlapping the specified range.
 
-    2. Test case: `busyfilter -s 01/01/2026 -e 05/01/2026`<br> 
+    2. Test case: `busyfilter -s 01/01/2026 -e 05/01/2026`<br>
        Expected: A message indicating “0 persons listed!” is displayed. The list view remains empty.
 
 3. Invalid busyfilter commands
@@ -845,8 +845,8 @@ testers are expected to do more *exploratory* testing.
     2. Test case: `busyfilter -s 28/03/2026 -e 25/03/2026` (Start date after end date)<br>
        Expected: Error message shown: "The start date cannot be later than the end date."
 
-    3. Test case: `busyfilter -s invalid -e invalid`  
-       **Expected:** Error message shown indicating that dates must follow the DD/MM/YYYY format.
+    3. Test case: `busyfilter -s invalid -e invalid`<br>
+       Expected: Error message shown indicating that dates must follow the DD/MM/YYYY format.
 
 ### Saving data
 
