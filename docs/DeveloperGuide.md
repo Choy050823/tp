@@ -548,6 +548,50 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 3a1. CampusConnect displays an error message explaining the command format.
     * 3a2. Marcus re-enters a valid sort field.
     * Use case resumes at step 1.
+---
+
+**UC09: Mark a Contact as Busy**
+
+**Goal:** To allow users to block out a specific period during which a contact is unavailable.
+
+**MSS (Main Success Scenario):**
+1. Marcus instructs the application to mark the nth contact as busy from a start date to an end date.
+2. CampusConnect validates the dates and the selected contact.
+3. CampusConnect overwrites any existing busy period for the contact with the new dates. 
+4. CampusConnect confirms the update and displays the contact’s updated profile.  
+   Use case ends.
+
+**Extensions:**
+
+* 2a. Marcus enters an invalid date format or the end date is before the start date. 
+  * 2a1. CampusConnect displays an error message explaining the correct format and constraints. 
+  * 2a2. Marcus re-enters the command with valid dates.  
+  Use case resumes at step 1.
+* 2b. Marcus selects a contact number (nth contact) that does not exist in the current list.
+    * 2b1. CampusConnect displays an error message indicating the contact selection is invalid.
+    * 2b2. Marcus selects a valid contact from the list.  
+      Use case resumes at step 1.
+---
+
+**UC10: List All Contacts Busy Within a Date Range**
+
+**Goal:** To filter and display all contacts who are busy during a specified date range.
+
+**MSS (Main Success Scenario):**
+1. Marcus instructs the application to list all contacts busy from a start date to an end date.
+2. CampusConnect validates the dates.
+3. CampusConnect evaluates all contacts’ busy periods against the specified range.
+4. CampusConnect displays only the contacts who are busy on **any day within the range**.  
+    Use case ends.
+
+**Extensions:**
+* 2a. Marcus enters an invalid date format or the end date is before the start date.
+    * 2a1. CampusConnect displays an error message explaining the correct format and constraints.
+    * 2a2. Marcus re-enters the command with valid dates.  
+    Use case resumes at step 1.
+* 4a. No contacts are busy during the specified period.
+    * 4a1. CampusConnect displays a “No busy contacts found” message.  
+    Use case ends. 
 
 ---
 ### Non-Functional Requirements
