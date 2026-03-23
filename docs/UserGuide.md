@@ -3,10 +3,13 @@ layout: page
 title: User Guide
 ---
 
+![Ui](images/Address.png)
+
 <div markdown="block" class="intro-box">
+
 ## **CampusConnect**
 
-CampusConnect is a **desktop contact management application designed for student leaders who need to coordinate across multiple university committees**. It is optimised for use via a Command Line Interface (CLI), while still providing the benefits of a Graphical User Interface (GUI). 
+CampusConnect is a **desktop contact management application designed for student leaders who need to coordinate across multiple university committees**. It is optimised for use via a Command Line Interface (CLI), while still providing the benefits of a Graphical User Interface (GUI).
 
 CampusConnect is especially suited for a **NUSSU secretary or student leader managing many contacts across different committees**, who needs quick access to contact details and availability. The app allows users to efficiently store, search, and organise contacts, as well as track when individuals are busy due to meetings or events.
 
@@ -16,7 +19,7 @@ By enabling fast command-based interactions, CampusConnect helps users familiar 
 
 <div markdown="block" class="alert alert-info">
 
-:information_source: **Assumptions About Target Users**
+ℹ️ **Assumptions About Target Users**
 
 To ensure this guide is effective, we assume the target user:
 * **Possesses basic technical proficiency:** Can comfortably install standard software like `Java 17` and navigate a computer's file system to run `.jar` files.
@@ -24,6 +27,7 @@ To ensure this guide is effective, we assume the target user:
 * **Understands university administrative structures:** Is familiar with managing contacts across various student leadership bodies, committees, and event planning schedules.
 
 </div>
+
 
 ## **Table of Contents**
 
