@@ -117,7 +117,7 @@ Format: `add [-r ROLE] -n NAME [-p PHONE_NUMBER] [-e EMAIL] [-a ADDRESS] [-t TAG
 
 <div markdown="span" class="alert alert-primary">
 
-:bulb: **Tip:**
+:bulb: **Tip:**<br>
 
 A person can have any number of tags (including 0)
 </div>
@@ -200,7 +200,7 @@ Format: `busy INDEX -s START_DATE -e END_DATE`
 
 <div markdown="span" class="alert alert-warning">
 
-:exclamation: **Caution:**
+:exclamation: **Caution:**<br>
 
 Running `busy` again for the same contact replaces the previous busy period instead of merging date ranges.
 </div>
@@ -283,7 +283,7 @@ Format: `find SEARCH_BY KEYWORD [; MORE_KEYWORDS]...`
 
 <div markdown="span" class="alert alert-primary">
 
-:bulb: **Tip:**
+:bulb: **Tip:**<br>
 
 Use `;` to split phrases into multiple search groups, e.g. `find name alice pauline ; josh`.
 </div>
@@ -309,7 +309,7 @@ Format: `delete INDEX`
 
 <div markdown="span" class="alert alert-warning">
 
-:exclamation: **Caution:**
+:exclamation: **Caution:**<br>
 
 `INDEX` refers to the currently displayed list. Run `list` first if you want to delete from the full contact list.
 </div>
@@ -337,7 +337,7 @@ Format: `clear`
 
 <div markdown="span" class="alert alert-warning">
 
-:exclamation: **Caution:**
+:exclamation: **Caution:**<br>
 
 `clear` affects all contacts currently shown in the list. If the list is filtered, only the filtered contacts are targeted.
 </div>
@@ -372,7 +372,7 @@ AddressBook data are saved automatically as a JSON file `[JAR file location]/dat
 
 <div markdown="span" class="alert alert-warning">
 
-:exclamation: **Caution:**
+:exclamation: **Caution:**<br>
 
 If your changes to the data file makes its format invalid, AddressBook will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
 
