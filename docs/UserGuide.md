@@ -283,8 +283,8 @@ Use `;` to split phrases into multiple search groups, e.g. `find name alice paul
 Examples:
 * `find name alice pauline ; josh` returns persons whose names contain `alice pauline` or `josh`.
 * `find tag friends ; owes me ; secretary` returns persons with tags containing `friends`, `owes me`, or `secretary`.
-* `find name alex ; david` returns `Alex Yeoh`, `David Li`.<br>
-  ![result for 'find name yi'](images/findNameYi.png)
+* `find name yi` returns `Yi Heng`, `Yi Kang`.<br>
+  ![result for 'find name heng ; kang'](images/findNameHengKang.png)
 
 ### Deleting a person : `delete`
 
