@@ -108,6 +108,7 @@ Adds a person to the address book.
 Format: `add -r ROLE -n NAME -p PHONE_NUMBER -e EMAIL -a ADDRESS [-t TAG]…​`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+
 A person can have any number of tags (including 0)
 </div>
 
@@ -187,6 +188,7 @@ Marks a contact as busy for a specific period.
 Format: `busy INDEX -s START_DATE -e END_DATE`
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
+
 Running `busy` again for the same contact replaces the previous busy period instead of merging date ranges.
 </div>
 
@@ -267,6 +269,7 @@ Finds persons whose names/tags contain any of the given keywords.
 Format: `find SEARCH_BY KEYWORD [; MORE_KEYWORDS]...`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+
 Use `;` to split phrases into multiple search groups, e.g. `find name alice pauline ; josh`.
 </div>
 
@@ -290,6 +293,7 @@ Deletes the specified person from the address book.
 Format: `delete INDEX`
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
+
 `INDEX` refers to the currently displayed list. Run `list` first if you want to delete from the full contact list.
 </div>
 
@@ -315,6 +319,7 @@ Clears the contacts currently shown in the list.
 Format: `clear`
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
+
 `clear` affects all contacts currently shown in the list. If the list is filtered, only the filtered contacts are targeted.
 </div>
 
@@ -347,7 +352,9 @@ AddressBook data are saved in the hard disk automatically after any command that
 AddressBook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
+
 If your changes to the data file makes its format invalid, AddressBook will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
+
 Furthermore, certain edits can cause the AddressBook to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </div>
 
