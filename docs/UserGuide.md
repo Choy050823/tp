@@ -9,6 +9,13 @@ CampusConnect is especially suited for a **NUSSU secretary or student leader man
 
 By enabling fast command-based interactions, CampusConnect helps users **quickly retrieve information and identify scheduling conflicts**, reducing the time spent navigating scattered contact lists and improving coordination across student leadership bodies.
 
+### Assumptions About Target Users
+
+To ensure this guide is effective, we assume the target user:
+* **Possesses basic technical proficiency:** Can comfortably install standard software like Java 17 and navigate a computer's file system to run `.jar` files.
+* **Is comfortable with typing:** Prefers keyboard-driven navigation and is willing to learn a Command Line Interface (CLI) to execute command-based interactions for faster data entry[cite: 26, 29].
+* [cite_start]**Understands university administrative structures:** Is familiar with managing contacts across various student leadership bodies, committees, and event planning schedules[cite: 25, 27, 29].
+
 ## **Table of Contents**
 
 - [Quick start](#quick-start)
