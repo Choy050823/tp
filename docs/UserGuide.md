@@ -4,7 +4,7 @@ title: User Guide
 ---
 
 <div markdown="block" class="intro-box">
-# **CampusConnect**
+## **CampusConnect**
 
 CampusConnect is a **desktop contact management application designed for student leaders who need to coordinate across multiple university committees**. It is optimised for use via a Command Line Interface (CLI), while still providing the benefits of a Graphical User Interface (GUI). 
 
@@ -309,7 +309,7 @@ Use `;` to split phrases into multiple search groups, e.g. `find name alice paul
 
 Examples:
 * `find name alice pauline ; josh` returns persons whose names contain `alice pauline` or `josh`.
-* `find tag friends ; owes me ; secretary` returns persons with tags containing `friends`, `owes me`, or `secretary`.
+* `find tag RAG2026 ; finance department ; secretaries` returns persons with tags containing `RAG2026`, `finance department`, or `secretaries`.
 * `find name heng ; kang` returns `Yi Heng`, `Yi Kang`.<br>
   ![result for 'find name heng ; kang'](images/findNameHengKang.png)
 
@@ -365,12 +365,12 @@ Format: `clear`
 
 Examples:
 * `list` followed by `clear` then `y` clears all currently listed contacts.
-* `find tag friends` followed by `clear` then `y` clears only the filtered contacts in that result.
+* `find tag NUSSU welfare club members` followed by `clear` then `y` clears only the filtered contacts in that result.
 * `clear` followed by `n` cancels the operation and leaves all contacts unchanged.
 
 ### Exiting the program : `exit`
 
-Exits the program.
+Exits the CampusConnect application.
 
 Format: `exit`
 
