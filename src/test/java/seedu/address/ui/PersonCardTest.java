@@ -239,7 +239,8 @@ public class PersonCardTest {
     public void display_personWithMissingFields_fieldsHidden() throws Exception {
         Person person = new PersonBuilder().withName("Missing Fields")
                 .withRole(null).withPhone(null).withEmail(null).withAddress(null).build();
-        
+
+
         CountDownLatch latch = new CountDownLatch(1);
         final PersonCard[] personCard = new PersonCard[1];
 
