@@ -57,6 +57,7 @@ By enabling fast command-based interactions, CampusConnect helps users **quickly
 
   * `find name Alice ; Benson` : Find contacts with name including Alice or Benson.
 
+  * `add -n John Doe` : Adds a contact named `John Doe` with no other fields to the Address Book.
   * `add -n John Doe -p 98765432 -e johnd@example.com -a John Street, Block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
 
   <div markdown="block" class="alert alert-info">
@@ -112,7 +113,7 @@ Format: `help`
 
 Adds a person to the address book.
 
-Format: `add -r ROLE -n NAME -p PHONE_NUMBER -e EMAIL -a ADDRESS [-t TAG]…​`
+Format: `add [-r ROLE] -n NAME [-p PHONE_NUMBER] [-e EMAIL] [-a ADDRESS] [-t TAG]…​`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 
@@ -131,6 +132,7 @@ If the person being added **already exists**, the application will prompt for co
 * If `n` is entered, the add operation will be cancelled.
 
 Examples:
+* `add -n John Doe`
 * `add -r President -n John Doe -p 98765432 -e johnd@example.com -a John street, block 123, #01-01`
 * `add -r Logistics -n Betsy Crowe -t friend -e betsycrowe@example.com -a Newgate Prison -p 1234567 -t criminal`
 
