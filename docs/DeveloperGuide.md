@@ -135,6 +135,19 @@ How the `Logic` component works:
    Note that although this is shown as a single step in the diagram above (for simplicity), in the code it can take several interactions (between the command object and the `Model`) to achieve.
 1. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
 
+Here is another sequence diagram illustrating the interactions within the `Logic` component, with `execute("list reverse")` API call as another example.
+
+![Interactions Inside the Logic Component for the `list reverse` Command](images/ListSequenceDiagram.png)
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `ListCommandParser` and `ListCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of diagram.
+</div>
+
+How the `Logic` component works (overlapping content are simplified):
+
+* Similar to the `delete 1` command above, `AddressBookParser` creates a `ListCommandParser` which parses the argument `reverse` and returns a `ListCommand` object.
+* This command object is executed by `LogicManager` which communicates with the `Model` to update the sorted & filtered list of `Person` objects in the `Model` to be in reverse order. 
+* The command result is encapsulated as a `CommandResult` object which is returned back to `Logic`, who will return it to the higher level components (e.g. `MainWindow`, a UI component) that called it.
+
 Here are the other classes in `Logic` (omitted from the class diagram above) that are used for parsing a user command:
 
 <img src="images/ParserClasses.png" width="600"/>
