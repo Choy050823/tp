@@ -5,6 +5,8 @@ skinparam ArrowFontStyle plain
 box Logic LOGIC_COLOR_T1
 participant ":LogicManager" as LogicManager LOGIC_COLOR
 participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":ConfirmDeleteCommandParser" as ConfirmDeleteCommandParser LOGIC_COLOR
+participant "c:ConfirmDeleteCommand" as ConfirmDeleteCommand LOGIC_COLOR
 participant ":DeleteCommandParser" as DeleteCommandParser LOGIC_COLOR
 participant "d:DeleteCommand" as DeleteCommand LOGIC_COLOR
 participant "r:CommandResult" as CommandResult LOGIC_COLOR
@@ -16,6 +18,48 @@ end box
 
 [-> LogicManager : execute("delete 1")
 activate LogicManager
+
+LogicManager -> AddressBookParser : parseCommandWithConfirmation("delete 1")
+activate AddressBookParser
+
+create ConfirmDeleteCommandParser
+AddressBookParser -> ConfirmDeleteCommandParser
+activate ConfirmDeleteCommandParser
+
+ConfirmDeleteCommandParser --> AddressBookParser
+deactivate ConfirmDeleteCommandParser
+
+AddressBookParser -> ConfirmDeleteCommandParser : parse("1")
+activate ConfirmDeleteCommandParser
+
+create ConfirmDeleteCommand
+ConfirmDeleteCommandParser -> ConfirmDeleteCommand
+activate ConfirmDeleteCommand
+
+ConfirmDeleteCommand --> ConfirmDeleteCommandParser :
+deactivate ConfirmDeleteCommand
+
+ConfirmDeleteCommandParser --> AddressBookParser : c
+deactivate ConfirmDeleteCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+ConfirmDeleteCommandParser -[hidden]-> AddressBookParser
+destroy ConfirmDeleteCommandParser
+
+AddressBookParser --> LogicManager : c
+deactivate AddressBookParser
+
+LogicManager -> ConfirmDeleteCommand : execute(m)
+activate ConfirmDeleteCommand
+
+create CommandResult
+ConfirmDeleteCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> ConfirmDeleteCommand
+deactivate CommandResult
+
+ConfirmDeleteCommand --> LogicManager : r
+deactivate ConfirmDeleteCommand
 
 LogicManager -> AddressBookParser : parseCommand("delete 1")
 activate AddressBookParser
@@ -46,25 +90,39 @@ destroy DeleteCommandParser
 AddressBookParser --> LogicManager : d
 deactivate AddressBookParser
 
-LogicManager -> DeleteCommand : execute(m)
-activate DeleteCommand
-
-DeleteCommand -> Model : deletePerson(1)
-activate Model
-
-Model --> DeleteCommand
-deactivate Model
-
-create CommandResult
-DeleteCommand -> CommandResult
-activate CommandResult
-
-CommandResult --> DeleteCommand
-deactivate CommandResult
-
-DeleteCommand --> LogicManager : r
-deactivate DeleteCommand
-
-[<--LogicManager
+[<--LogicManager : r
 deactivate LogicManager
+
+opt User confirms deletion
+    [-> LogicManager : execute("y")
+    activate LogicManager
+
+    LogicManager -> AddressBookParser : parseYesNo("y")
+    activate AddressBookParser
+
+    AddressBookParser --> LogicManager : true
+    deactivate AddressBookParser
+
+    LogicManager -> DeleteCommand : execute(m)
+    activate DeleteCommand
+
+    DeleteCommand -> Model : deletePerson(1)
+    activate Model
+
+    Model --> DeleteCommand
+    deactivate Model
+
+    create CommandResult
+    DeleteCommand -> CommandResult
+    activate CommandResult
+
+    CommandResult --> DeleteCommand
+    deactivate CommandResult
+
+    DeleteCommand --> LogicManager : r2
+    deactivate DeleteCommand
+
+    [<--LogicManager : r2
+    deactivate LogicManager
+end
 @enduml
