@@ -49,7 +49,6 @@ public class FindCommandParser implements Parser<FindCommand> {
      * Parses the query segment after the search mode into keyword groups.
      */
     private List<String> parseKeywords(String rawQuery) throws ParseException {
-        assert false;
 
         String trimmedQuery = rawQuery.trim();
         if (trimmedQuery.isEmpty()) {
