@@ -115,6 +115,13 @@ public class MainWindowTest {
     @BeforeAll
     static void initToolkit() {
         assumeFalse("true".equals(System.getenv("CI")), "Skipping MainWindow GUI tests on CI");
+
+        System.setProperty("java.awt.headless", "true");
+        System.setProperty("testfx.robot", "glass");
+        System.setProperty("testfx.headless", "true");
+        System.setProperty("prism.order", "sw");
+        System.setProperty("prism.text", "t2k");
+
         try {
             Platform.startup(() -> {});
         } catch (IllegalStateException | UnsupportedOperationException e) {
