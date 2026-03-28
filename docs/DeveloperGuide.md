@@ -80,7 +80,7 @@ The bulk of the app's work is done by the following four components:
 
 **How the architecture components interact with each other**
 
-The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `clear`.
+The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `clear` and subsequently confirms the deletion..
 
 <img src="images/LogicSequenceDiagram.png" width="574" />
 
@@ -120,7 +120,7 @@ Here's a (partial) class diagram of the `Logic` component:
 
 <img src="images/LogicClassDiagram.png" width="550"/>
 
-The sequence diagram below illustrates the interactions within the `Logic` component, taking `execute("delete 1")` API call as an example.
+The sequence diagram below illustrates the interactions within the `Logic` component, using the `execute("delete 1")` API call and its subsequent confirmation `execute("y")` as an example to demonstrate the confirmation flow.
 
 ![Interactions Inside the Logic Component for the `delete 1` Command](images/DeleteSequenceDiagram.png)
 
@@ -222,7 +222,7 @@ If the command requires confirmation, a corresponding `ConfirmCommand` subclass 
 
 These confirmation commands do not perform the final action immediately. Instead, they return a `CommandResult` indicating that the application is awaiting confirmation input.
 
-`LogicManager` then enters a temporary confirmation state and stores the actual command that should be executed later if the user confirms.
+`LogicManager` then enters a temporary confirmation state and stores the actual command that should be executed later if the user confirms. (The sequence diagram for this interaction is detailed in the [Logic Component](#logic-component) section above).
 
 After that:
 - if the user enters `y`, the stored command is executed

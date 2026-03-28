@@ -9,6 +9,8 @@ package Logic as LogicPackage {
 package "Parser Classes" as ParserClasses{
 }
 Class XYZCommand
+Class ConfirmXYZCommand
+Class "<<interface>>\nConfirmCommand" as ConfirmCommand
 Class CommandResult
 Class "{abstract}\nCommand" as Command
 
@@ -30,8 +32,11 @@ HiddenOutside ..> Logic
 LogicManager .right.|> Logic
 LogicManager -right->"1" ParserClasses
 ParserClasses ..> XYZCommand : <<create>>
+ParserClasses ..> ConfirmXYZCommand : <<create>>
 
 XYZCommand -up-|> Command
+ConfirmXYZCommand -up-|> XYZCommand
+ConfirmXYZCommand .up.|> ConfirmCommand
 LogicManager .left.> Command : <<call>>
 
 LogicManager --> Model
@@ -40,6 +45,7 @@ Storage --[hidden] Model
 Command .[hidden]up.> Storage
 Command .right.> Model
 note right of XYZCommand: XYZCommand = AddCommand, \nFindCommand, etc
+note right of ConfirmXYZCommand: ConfirmXYZCommand = ConfirmAddCommand, \nConfirmEditCommand, etc
 
 Logic ..> CommandResult
 LogicManager .down.> CommandResult
