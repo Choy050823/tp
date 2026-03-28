@@ -163,7 +163,8 @@ public class EditCommandTest {
 
     @org.junit.jupiter.api.Test
     public void getCommandWord() {
-        EditCommand command = new EditCommand(seedu.address.commons.core.index.Index.fromOneBased(1), new EditCommand.EditPersonDescriptor());
+        EditCommand command = new EditCommand(seedu.address.commons.core.index.Index.fromOneBased(1),
+                new EditCommand.EditPersonDescriptor());
         org.junit.jupiter.api.Assertions.assertEquals(EditCommand.COMMAND_WORD, command.getCommandWord());
     }
 }

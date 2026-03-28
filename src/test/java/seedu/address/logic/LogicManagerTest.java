@@ -154,7 +154,8 @@ public class LogicManagerTest {
 
     @Test
     public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
-        assertThrows(UnsupportedOperationException.class, () -> logic.getFilteredPersonList().remove(0));
+        assertThrows(UnsupportedOperationException.class, () ->
+                logic.getFilteredPersonList().remove(0));
     }
 
     /**
@@ -296,7 +297,8 @@ public class LogicManagerTest {
         logic.execute(addCommand);
         CommandResult result = logic.execute("n");
 
-        assertEquals(String.format(seedu.address.logic.Messages.MESSAGE_SUCCESSFUL_CANCEL, "Add"), result.getFeedbackToUser());
+        assertEquals(String.format(seedu.address.logic.Messages.MESSAGE_SUCCESSFUL_CANCEL, "Add"),
+                result.getFeedbackToUser());
         assertEquals(1, model.getAddressBook().getPersonList().size());
     }
 
@@ -391,7 +393,8 @@ public class LogicManagerTest {
         logic.execute(ClearCommand.COMMAND_WORD);
         CommandResult result = logic.execute("n");
 
-        assertEquals(String.format(seedu.address.logic.Messages.MESSAGE_SUCCESSFUL_CANCEL, "Clear"), result.getFeedbackToUser());
+        assertEquals(String.format(seedu.address.logic.Messages.MESSAGE_SUCCESSFUL_CANCEL, "Clear"),
+                result.getFeedbackToUser());
         assertEquals(1, model.getAddressBook().getPersonList().size());
     }
 
