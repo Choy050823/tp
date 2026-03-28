@@ -66,7 +66,7 @@ public class HelpWindow extends UiPart<Stage> {
     }
 
     @FXML
-    private void openUserGuide() {
+    public void openUserGuide() {
         try {
             Desktop.getDesktop().browse(new URI(USERGUIDE_URL));
         } catch (Exception e) {

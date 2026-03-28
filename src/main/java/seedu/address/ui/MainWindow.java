@@ -143,7 +143,7 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     public void handleHelp() {
         if (!helpWindow.isShowing()) {
-            helpWindow.show();
+            helpWindow.openUserGuide();
         } else {
             helpWindow.focus();
         }
@@ -182,7 +182,7 @@ public class MainWindow extends UiPart<Stage> {
 
             if (commandResult.isShowHelp()) {
                 try {
-                    Desktop.getDesktop().browse(new URI(HelpWindow.USERGUIDE_URL));
+                    handleHelp();
                 } catch (Exception e) {
                     logger.warning("Failed to open browser: " + e.getMessage());
                 }
