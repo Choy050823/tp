@@ -55,9 +55,9 @@ public class LogicManager implements Logic {
 
         CommandResult commandResult = null;
 
-        if (isAwaitingConfirmation) {
+        if (!isAwaitingConfirmation) {
             commandResult = handleNotAwaitingExecute(commandText);
-        } else if (!isAwaitingConfirmation) {
+        } else {
             commandResult = handleAwaitingExecute(commandText);
         }
         try {
