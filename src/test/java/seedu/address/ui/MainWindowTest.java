@@ -114,7 +114,7 @@ public class MainWindowTest {
      */
     @BeforeAll
     static void initToolkit() {
-        // Initialize JavaFX toolkit
+        assumeFalse("true".equals(System.getenv("CI")), "Skipping MainWindow GUI tests on CI");
         try {
             Platform.startup(() -> {});
         } catch (IllegalStateException | UnsupportedOperationException e) {
@@ -127,7 +127,6 @@ public class MainWindowTest {
      */
     @BeforeEach
     void setUp() throws Exception {
-        assumeFalse("true".equals(System.getenv("CI")), "Skipping MainWindow GUI tests on CI");
         CountDownLatch latch = new CountDownLatch(1);
 
         Platform.runLater(() -> {
@@ -155,7 +154,7 @@ public class MainWindowTest {
         }
     }
 
-    private void assumeFalse(boolean ci, String s) {
+    private static void assumeFalse(boolean ci, String s) {
     }
 
     /**
