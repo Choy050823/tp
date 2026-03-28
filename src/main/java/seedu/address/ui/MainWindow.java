@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import java.awt.Desktop;
+import java.net.URI;
 import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
@@ -179,7 +181,11 @@ public class MainWindow extends UiPart<Stage> {
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
 
             if (commandResult.isShowHelp()) {
-                handleHelp();
+                try {
+                    Desktop.getDesktop().browse(new URI(HelpWindow.USERGUIDE_URL));
+                } catch (Exception e) {
+                    logger.warning("Failed to open browser: " + e.getMessage());
+                }
             }
 
             if (commandResult.isExit()) {

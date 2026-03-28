@@ -1,9 +1,9 @@
 package seedu.address.ui;
 
-import java.util.logging.Logger;
-
 import java.awt.Desktop;
 import java.net.URI;
+import java.util.logging.Logger;
+
 import javafx.fxml.FXML;
 import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
@@ -35,6 +35,9 @@ public class HelpWindow extends UiPart<Stage> {
         this(new Stage());
     }
 
+    /**
+     * Shows the help window.
+     */
     public void show() {
         logger.fine("Showing help page about the application.");
         getRoot().show();
