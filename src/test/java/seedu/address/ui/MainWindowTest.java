@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assumptions.assumeFalse;
 
 import java.lang.reflect.Field;
 import java.nio.file.Path;
@@ -159,9 +160,6 @@ public class MainWindowTest {
         if (!latch.await(5, TimeUnit.SECONDS)) {
             fail("Timeout waiting for JavaFX thread setup");
         }
-    }
-
-    private static void assumeFalse(boolean ci, String s) {
     }
 
     /**
