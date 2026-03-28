@@ -207,6 +207,8 @@ For `clear`, confirmation is always required before clearing the currently liste
 
 For `add`, confirmation is only required when the person being added already exists in the address book. Non-duplicate contacts are added immediately without any confirmation prompt.
 
+![Confirm Command Class Diagram](images/ConfirmCommandClassDiagram.png)
+
 This shared behavior is implemented using an interface `ConfirmCommand`. Concrete subclasses such as `ConfirmDeleteCommand`, `ConfirmClearCommand`, and `ConfirmAddCommand` inherit from their base classes, while implementing `ConfirmCommand` and providing command-specific validation and confirmation messages.
 
 #### Implementation

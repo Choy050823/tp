@@ -1,0 +1,73 @@
+@startuml
+!include style.puml
+skinparam arrowThickness 1.1
+skinparam arrowColor LOGIC_COLOR_T4
+skinparam classBackgroundColor LOGIC_COLOR
+
+skinparam classAttributeIconSize 0
+skinparam classFontColor white
+skinparam classAttributeFontColor white
+skinparam interfaceFontColor white
+skinparam interfaceAttributeFontColor white
+
+show interface methods
+show class methods
+
+package Logic as LogicPackage {
+    package Command as CommandPackage {
+        interface "<<interface>>\nConfirmCommand" as ConfirmCommand {
+            + getConfirmationMessage(Model): String
+        }
+
+        class "{abstract}\nCommand" as Command {
+            + {abstract} execute(Model): CommandResult
+        }
+
+        class AddCommand {
+            + execute(Model): CommandResult
+        }
+
+        class DeleteCommand {
+            + execute(Model): CommandResult
+        }
+
+        class ClearCommand {
+            + execute(Model): CommandResult
+        }
+
+        class ConfirmAddCommand {
+            + execute(Model): CommandResult
+            + getConfirmationMessage(Model): String
+        }
+
+        class ConfirmDeleteCommand {
+            + execute(Model): CommandResult
+            + getConfirmationMessage(Model): String
+        }
+
+        class ConfirmClearCommand {
+            + execute(Model): CommandResult
+            + getConfirmationMessage(Model): String
+        }
+    }
+}
+
+class Model <<interface>>
+class CommandResult
+
+ConfirmAddCommand -up-|> AddCommand
+ConfirmDeleteCommand -up-|> DeleteCommand
+ConfirmClearCommand -up-|> ClearCommand
+
+ConfirmAddCommand .up.|> ConfirmCommand
+ConfirmDeleteCommand .up.|> ConfirmCommand
+ConfirmClearCommand .up.|> ConfirmCommand
+
+AddCommand -up-|> Command
+DeleteCommand -up-|> Command
+ClearCommand -up-|> Command
+
+Command .right.> Model
+Command .down.> CommandResult
+
+@enduml
