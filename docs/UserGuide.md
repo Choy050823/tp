@@ -224,6 +224,8 @@ You can copy the value of a field (e.g. phone number) of a contact in the list t
 **Expected Result:**
 The field turns pink for a temporary period to indicate that it has been copied, and you can paste the value elsewhere.
 
+![ClickCopyPink.png](images/ClickCopyPink.png)
+
 ### Marking a person as busy : `busy`
 
 Marks a contact as busy for a specific period.
