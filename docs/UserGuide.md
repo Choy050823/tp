@@ -266,7 +266,7 @@ busyfilter -s 01/01/2026 -e 31/01/2026
 ```
 
 **Expected Result:**
-All contacts who have are busy on any day from 1 Jan 2026 to 31 Jan 2026 are listed.
+All contacts who are busy on any day from 1 Jan 2026 to 31 Jan 2026 are listed.
 
 A contact is considered busy if there exists at least one day within the given period such that the contact is busy on that day.
 
