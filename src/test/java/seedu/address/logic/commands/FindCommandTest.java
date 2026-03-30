@@ -70,6 +70,16 @@ public class FindCommandTest {
     }
 
     @Test
+    public void execute_multipleKeywords_onePersonFound() throws CommandException {
+        String expectedMessage = Messages.getMessageForPersonsListed(1);;
+        NameContainsKeywordsPredicate predicate = preparePredicate("Kurz");
+        FindCommand command = new FindCommand(predicate);
+        expectedModel.updateFilteredPersonList(predicate);
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+        assertEquals(Arrays.asList(CARL), model.getSortedFilteredPersonList());
+    }
+
+    @Test
     public void execute_multipleKeywords_multiplePersonsFound() throws CommandException {
         String expectedMessage = Messages.getMessageForPersonsListed(3);;
         NameContainsKeywordsPredicate predicate = preparePredicate("Kurz Elle Kunz");
