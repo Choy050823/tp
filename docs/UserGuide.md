@@ -446,8 +446,44 @@ _Details coming soon ..._
 
 ## FAQ
 
-**Q**: How do I transfer my data to another Computer?<br>
+**Q**: How do I transfer my data to another Computer?  
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous CampusConnect home folder.
+
+**Q**: Why does my contact not appear after I run a command?  
+**A**: The list may be filtered (e.g., after using `find` or `busyfilter`). Run `list` to display all contacts again.
+
+**Q**: Can I undo a command (e.g. `delete` or `clear`)?  
+**A**: No, undo is not supported in the current version of CampusConnect. You should confirm carefully before executing commands that modify or delete data.
+
+**Q**: What happens if I enter an invalid command?  
+**A**: The application will show an error message explaining the issue. Check the command format and try again.
+
+**Q**: Why is my `busy` command not working?  
+**A**: Ensure that:
+- The index refers to a valid contact in the current list
+- Dates follow the `DD/MM/YYYY` format
+- The start date is before or equal to the end date
+
+**Q**: Can a contact have multiple busy periods?  
+**A**: No. Each contact can only have one busy period. Running the `busy` command again will overwrite the existing period.
+
+**Q**: Why does `busyfilter` not show some contacts?  
+**A**: `busyfilter` only shows contacts who are busy **within the specified date range**. Contacts without a busy period, or whose busy period does not overlap with the given range, will not be shown.
+
+**Q**: Can I add duplicate contacts?  
+**A**: Yes, but the application will prompt you for confirmation before adding a duplicate.
+
+**Q**: Why are my tags missing after editing a contact?  
+**A**: When using `edit` with the `-t` field, all existing tags are replaced. To keep existing tags, you must re-enter them.
+
+**Q**: Why does `delete` remove the wrong person?  
+**A**: The index refers to the **currently displayed list**, not the full contact list. Run `list` first if you want to delete based on the full list.
+
+**Q**: Do I need to save my data manually?  
+**A**: No. All changes are saved automatically after each command.
+
+**Q**: Can I edit the data file manually?  
+**A**: Yes, but it is not recommended unless you are confident. Invalid edits may cause data loss.
 
 --------------------------------------------------------------------------------------------------------------------
 
