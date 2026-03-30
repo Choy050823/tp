@@ -9,6 +9,7 @@
 ### Improvements
 - Feature `add`:
 - Feature `help`: Directly opens the user guide on the user's default browser.
+- Feature `list`: Update the error message examples displayed.
 
 ### Bug Fixes
 - Feature `add`:
