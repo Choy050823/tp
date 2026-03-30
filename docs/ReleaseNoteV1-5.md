@@ -12,6 +12,7 @@
 
 ### Bug Fixes
 - Feature `add`:
+- Feature `list`/`busyfilter`/`find`: Displaying 0 people and 1 person will now have a clearer display message.
 
 ### Documentation
 - Updated the User Guide.
