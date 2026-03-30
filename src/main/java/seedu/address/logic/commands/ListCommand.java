@@ -23,7 +23,9 @@ public class ListCommand extends Command {
             + ": Lists all persons in the address book.\n"
             + "Parameters: [sort] [order]\n"
             + "Example: " + COMMAND_WORD + "\n"
+            + "Example: " + COMMAND_WORD + " sort\n"
             + "Example: " + COMMAND_WORD + " ascending\n"
+            + "Example: " + COMMAND_WORD + " descending\n"
             + "Example: " + COMMAND_WORD + " reverse";
 
     /**
