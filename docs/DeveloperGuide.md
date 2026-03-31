@@ -16,6 +16,7 @@ title: Developer Guide
 - [Implementation](#implementation)
     - [Confirmation flow for `add`, `edit`, `delete`, and `clear`](#confirmation-flow-for-add-delete-and-clear)
     - [Busy status feature](#busy-status-feature)
+    - [Phone number normalization](#phone-number-normalization)
     - [[Proposed] Undo/redo feature](#proposed-undoredo-feature)
     - [[Proposed] Data archiving](#proposed-data-archiving)
 - [Documentation, logging, testing, configuration, dev-ops](#documentation-logging-testing-configuration-dev-ops)
@@ -169,6 +170,8 @@ The `Model` component,
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
+The `Phone` value object accepts phone numbers containing digits with optional spaces between digits. These spaces are removed during construction so that phone numbers are stored in a canonical format without whitespace.
+
 <div markdown="span" class="alert alert-info">ℹ️ **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
 
 <img src="images/BetterModelClassDiagram.png" width="450" />
@@ -265,6 +268,35 @@ The `BusyPeriod` class represents the time interval during which a person is bus
 #### Design rationale
 
 By using an `Optional<BusyPeriod>` in the `Person` class, we maintain backward compatibility with contacts that don't have a busy status. The decision to use strict date resolution prevents subtle bugs where users might input non-existent dates that are silently "rounded" by the default Java date parser.
+
+### Phone number normalization
+
+The application supports phone numbers that contain spaces between digits, while storing them internally in a canonical format without spaces.
+
+#### Implementation
+
+This behavior is implemented in the `Phone` model class.
+
+During validation, a phone number is accepted if:
+- it contains only digits and optional spaces between digits
+- it contains at least 3 digits in total
+
+After validation succeeds, the `Phone` constructor removes all whitespace from the input before storing the final value.
+
+For example:
+- `91234567` is stored as `91234567`
+- `9123 4567` is also stored as `91234567`
+
+As a result, differently spaced inputs that represent the same phone number are treated as the same stored value.
+
+#### Design rationale
+
+This design improves usability by allowing users to enter phone numbers in a more natural and readable format, while still preserving a consistent internal representation.
+
+The normalization step also ensures that:
+- phone numbers are stored in a canonical format
+- equality checks are based on the normalized value rather than the original spacing
+- downstream components do not need to handle multiple spacing variations of the same phone number
 
 ### \[Proposed\] Undo/redo feature
 
@@ -567,7 +599,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 3a2. Marcus re-enters a valid sort field.
     * Use case resumes at step 1.
 ---
-
 **UC09: Mark a Contact as Busy**
 
 **Goal:** To allow users to block out a specific period during which a contact is unavailable.
@@ -582,9 +613,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions:**
 
 * 2a. Marcus enters an invalid date format or the end date is before the start date.
-  * 2a1. CampusConnect displays an error message explaining the correct format and constraints.
-  * 2a2. Marcus re-enters the command with valid dates.<br>
-  Use case resumes at step 1.
+    * 2a1. CampusConnect displays an error message explaining the correct format and constraints.
+    * 2a2. Marcus re-enters the command with valid dates.<br>
+      Use case resumes at step 1.
 * 2b. Marcus selects a contact number (nth contact) that does not exist in the current list.
     * 2b1. CampusConnect displays an error message indicating the contact selection is invalid.
     * 2b2. Marcus selects a valid contact from the list.<br>
@@ -600,16 +631,16 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 2. CampusConnect validates the dates.
 3. CampusConnect evaluates all contacts’ busy periods against the specified range.
 4. CampusConnect displays only the contacts who are busy on **any day within the range**.<br>
-    Use case ends.
+   Use case ends.
 
 **Extensions:**
 * 2a. Marcus enters an invalid date format or the end date is before the start date.
     * 2a1. CampusConnect displays an error message explaining the correct format and constraints.
     * 2a2. Marcus re-enters the command with valid dates.<br>
-    Use case resumes at step 1.
+      Use case resumes at step 1.
 * 4a. No contacts are busy during the specified period.
     * 4a1. CampusConnect displays a “No busy contacts found” message.<br>
-    Use case ends.
+      Use case ends.
 
 ---
 ### Non-Functional Requirements
@@ -716,6 +747,13 @@ testers are expected to do more *exploratory* testing.
     3. Test case: `add -r President -n John Doe -p 98765432 -e invalid -a John street, block 123, #01-01`<br>
        Expected: Error message shown indicating invalid email format.
 
+4. Adding a person with spaces in the phone number
+
+    1. Prerequisites: The person to be added does not already exist in the address book.
+
+    2. Test case: `add -r President -n John Doe -p 9123 4567 -e johnd@example.com -a John street, block 123, #01-01`<br>
+       Expected: The person is added successfully. The phone number is accepted even though it contains spaces between digits. The stored/displayed phone number is normalized without spaces.
+
 ### Editing a person
 
 1. Editing a person while all persons are being shown
@@ -762,14 +800,14 @@ testers are expected to do more *exploratory* testing.
 
     1. Prerequisites: The app contains multiple contacts with different names.
 
-   2. Test case: `find John`<br>
-      Expected: All contacts with names containing "John" are displayed.
+    2. Test case: `find John`<br>
+       Expected: All contacts with names containing "John" are displayed.
 
-   3. Test case: `find alice`<br>
-      Expected: Contacts matching "alice" are displayed (case-insensitive).
+    3. Test case: `find alice`<br>
+       Expected: Contacts matching "alice" are displayed (case-insensitive).
 
-   4. Test case: `find John; alice`<br>
-        Expected: Contacts matching "John" and "alice" are displayed (case-insensitive).
+    4. Test case: `find John; alice`<br>
+       Expected: Contacts matching "John" and "alice" are displayed (case-insensitive).
 
 2. Finding persons by partial match
 
@@ -800,7 +838,7 @@ testers are expected to do more *exploratory* testing.
     1. Prerequisites: The app contains multiple contacts with different names.
 
     2. Test case: `list`<br>
-      Expected: All contacts are displayed in their default order.
+       Expected: All contacts are displayed in their default order.
 
 2. Listing persons in ascending order
 
@@ -892,4 +930,3 @@ testers are expected to do more *exploratory* testing.
 1. Dealing with missing/corrupted data files
 
     1. TODO _{explain how to simulate a missing/corrupted file, and the expected behavior}_
-
