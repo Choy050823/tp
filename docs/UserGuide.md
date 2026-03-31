@@ -3,8 +3,6 @@ layout: page
 title: User Guide
 ---
 
-![Ui](images/Address.png)
-
 <div markdown="block" class="intro-box">
 
 ## **CampusConnect**
@@ -28,24 +26,27 @@ To ensure this guide is effective, we assume the target user:
 
 </div>
 
+### **User Interface Introduction**
+
+![Ui](images/Address.png)
 
 ## **Table of Contents**
 
 - [Quick start](#quick-start)
 - [Features](#features)
-    - [Viewing help: `help`](#viewing-help--help)
     - [Adding a person: `add`](#adding-a-person-add)
+    - [Marking a person as busy : `busy`](#marking-a-person-as-busy--busy)
+    - [Locating persons by busy period: `busyfilter`](#locating-persons-by-busy-period-busyfilter)
+    - [Clearing listed/filtered entries : `clear`](#clearing-listedfiltered-entries--clear)
+    - [Deleting a person : `delete`](#deleting-a-person--delete)
+    - [Editing a person : `edit`](#editing-a-person--edit)
+    - [Exiting the program : `exit`](#exiting-the-program--exit)
+    - [Locating persons by name/tags: `find`](#locating-persons-by-nametags-find)
+    - [Viewing help: `help`](#viewing-help--help)
     - [Listing all persons: `list`](#listing-all-persons--list)
         - [1. Default Listing](#1-default-listing)
         - [2. Sorted Listing](#2-sorted-listing)
         - [3. Bonus: Copying of fields in a list](#3-bonus-copying-of-fields-in-a-list)
-    - [Marking a person as busy : `busy`](#marking-a-person-as-busy--busy)
-    - [Locating persons by busy period: `busyfilter`](#locating-persons-by-busy-period-busyfilter)
-    - [Editing a person : `edit`](#editing-a-person--edit)
-    - [Locating persons by name/tags: `find`](#locating-persons-by-nametags-find)
-    - [Deleting a person : `delete`](#deleting-a-person--delete)
-    - [Clearing listed/filtered entries : `clear`](#clearing-listedfiltered-entries--clear)
-    - [Exiting the program : `exit`](#exiting-the-program--exit)
     - [Saving the data](#saving-the-data)
     - [Editing the data file](#editing-the-data-file)
     - [Archiving data files `[coming in v2.0]`](#archiving-data-files-coming-in-v20)
@@ -82,7 +83,7 @@ To ensure this guide is effective, we assume the target user:
   * `add -n John Doe -p 98765432 -e johnd@u.nus.edu -a John Street, Block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
 
 <div markdown="block" class="alert alert-info">
-**:information_source: Command confirmation:**<br>
+**ℹ️ Command confirmation:**<br>
   Certain commands like `delete` and `clear` will ask for confirmation. Input `y` to confirm or `n` to cancel.
 </div>
 
@@ -102,7 +103,7 @@ To ensure this guide is effective, we assume the target user:
 
 <div markdown="block" class="alert alert-info">
 
-**:information_source: Notes about the command format:**<br>
+**ℹ️ Notes about the command format:**<br>
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
   e.g. in `add -n NAME`, `NAME` is a parameter which can be used as `add -n John Doe`.
@@ -121,14 +122,6 @@ To ensure this guide is effective, we assume the target user:
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </div>
-
-### Viewing help : `help`
-
-Shows a message explaining how to access the help page.
-
-![help message](images/helpMessage.png)
-
-**Format:** `help`
 
 ### Adding a person: `add`
 
@@ -159,58 +152,6 @@ Examples:
 * `add -r President -n John Doe -p 98765432 -e johnd@u.nus.edu -a 18 College Avenue West, #01-002`
 * `add -r Coordinator -n Lim Wei Jie -p 98765678 -e lwj.example@u.nus.edu -a 18 College Avenue West, #01-001`
 
-### Listing all persons : `list`
-
-Shows a list of all persons in the address book.
-
-#### 1. Default Listing
-
-Displays all contacts in the order they are stored.
-
-**Format:**
-`list`
-
-**Example:**
-```
-list
-```
-
-**Expected Result:**
-All contacts are displayed in their default order.
-
-#### 2. Sorted Listing
-
-You can sort contacts alphabetically in ascending or descending order.
-
-**Format:**
-`list SORT_ORDER`
-
-**Ascending (A → Z):**
-```
-list sort
-list ascending
-```
-
-**Expected Result:**
-All contacts are displayed in ascending alphabetical order by name.
-
-**Descending (Z → A):**
-
-```
-list descending
-list reverse
-```
-
-**Expected Result:**
-All contacts are displayed in descending alphabetical order by name.
-
-#### 3. Bonus: Copying of fields in a list
-
-You can copy the value of a field (e.g. phone number) of a contact in the list to the clipboard by clicking on the field!
-
-**Expected Result:**
-The field turns pink for a temporary period to indicate that it has been copied, and you can paste the value elsewhere.
-
 ### Marking a person as busy : `busy`
 
 Marks a contact as busy for a specific period.
@@ -237,14 +178,6 @@ Examples:
 
 ### Locating persons by busy period: `busyfilter`
 
-Filters and displays contacts who are busy during a specified date range.
-
-A contact is considered busy if there exists at least one day within the given period such that the contact is busy on that day.
-
-Otherwise, the contact is considered not busy if for all days in the specified period, the contact is not busy.
-
-#### Basic Usage
-
 Shows all contacts who are busy at **any point within the given date range**.
 
 **Format:**
@@ -259,7 +192,66 @@ busyfilter -s 01/01/2026 -e 31/01/2026
 ```
 
 **Expected Result:**
-All contacts who have are busy on any day from 1 Jan 2026 to 31 Jan 2026 are listed.
+All contacts who are busy on any day from 1 Jan 2026 to 31 Jan 2026 are listed.
+
+A contact is considered busy if there exists at least one day within the given period such that the contact is busy on that day.
+
+Otherwise, the contact is considered not busy if for all days in the specified period, the contact is not busy.
+
+### Clearing listed/filtered entries : `clear`
+
+Clears the contacts currently shown in the list.
+
+**Format:** `clear`
+
+<div markdown="span" class="alert alert-warning">
+
+:exclamation: **Caution:**<br><br>
+
+`clear` affects all contacts currently shown in the list. If the list is filtered, only the filtered contacts are targeted.
+</div>
+
+* The command targets only the currently listed/filtered contacts.
+* A confirmation prompt is shown before contacts are removed.
+
+**Clear confirmation prompt:**
+> `Are you sure you want to clear the currently listed contacts? [y/n]`
+
+* If `y` is entered, the listed/filtered contacts are deleted.
+* If `n` is entered, the operation is cancelled.
+
+Examples:
+* `list` followed by `clear` then `y` clears all currently listed contacts.
+* `find tag NUSSU welfare club members` followed by `clear` then `y` clears only the filtered contacts in that result.
+* `clear` followed by `n` cancels the operation and leaves all contacts unchanged.
+
+### Deleting a person : `delete`
+
+Deletes the specified person from the address book.
+
+**Format:** `delete INDEX`
+
+<div markdown="span" class="alert alert-warning">
+
+:exclamation: **Caution:**<br><br>
+
+`INDEX` refers to the currently displayed list. Run `list` first if you want to delete from the full contact list.
+</div>
+
+* Deletes the person at the specified `INDEX`.
+* The index refers to the index number shown in the displayed person list.
+* The index **must be a positive integer** 1, 2, 3, …​
+* Before deletion is performed, the application will prompt for confirmation.
+
+**Delete confirmation prompt:**
+> `Are you sure you want to delete the contact: XXX? [y/n]`
+
+* If `y` is entered, the person will be deleted.
+* If `n` is entered, the delete operation will be cancelled.
+
+Examples:
+* `list` followed by `delete 2` prompts confirmation for deleting the 2nd person in the address book.
+* `find name Betsy` followed by `delete 1` prompts confirmation for deleting the 1st person in the results of the `find` command.
 
 ### Editing a person : `edit`
 
@@ -292,6 +284,12 @@ Examples:
 *  `edit 1 -p 91234567 -e johndoe@u.nus.edu` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@u.nus.edu` respectively.
 *  `edit 2 -n Wang -t` Edits the name of the 2nd person to be `Wang` and clears all existing tags.
 
+### Exiting the program : `exit`
+
+Exits the CampusConnect application.
+
+**Format:** `exit`
+
 ### Locating persons by name/tags: `find`
 
 Finds persons whose names/tags contain any of the given keywords.
@@ -318,68 +316,106 @@ Examples:
 * `find name heng ; kang` returns `Yi Heng`, `Yi Kang`.<br>
   ![result for 'find name heng ; kang'](images/findNameHengKang.png)
 
-### Deleting a person : `delete`
+### Viewing help : `help`
 
-Deletes the specified person from the address book.
+Opens up the online user guide in the default browser.
 
-**Format:** `delete INDEX`
+![help message](images/helpMessage.png)
 
-<div markdown="span" class="alert alert-warning">
+**Format:** `help`
 
-:exclamation:
+<div markdown="span" class="alert alert-primary">
+:bulb: **Tip:**<br><br>
 
-**Caution:**<br><br>
-
-`INDEX` refers to the currently displayed list. Run `list` first if you want to delete from the full contact list.
+Alternatively, you can also access the user guide via the `Help` menu or by pressing `F1` on your keyboard.
 </div>
 
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
-* Before deletion is performed, the application will prompt for confirmation.
+### Listing all persons : `list`
 
-**Delete confirmation prompt:**
-> `Are you sure you want to delete the contact: XXX? [y/n]`
+Shows a list of all persons in the address book.
 
-* If `y` is entered, the person will be deleted.
-* If `n` is entered, the delete operation will be cancelled.
+#### 1. Default Listin### Adding a person: `add`
 
-Examples:
-* `list` followed by `delete 2` prompts confirmation for deleting the 2nd person in the address book.
-* `find name Betsy` followed by `delete 1` prompts confirmation for deleting the 1st person in the results of the `find` command.
+Adds a person to the address book.
 
-### Clearing listed/filtered entries : `clear`
+**Format:** `add [-r ROLE] -n NAME [-p PHONE_NUMBER] [-e EMAIL] [-a ADDRESS] [-t TAG]…​`
 
-Clears the contacts currently shown in the list.
+<div markdown="span" class="alert alert-primary">
 
-**Format:** `clear`
+:bulb: **Tip:**<br><br>
 
-<div markdown="span" class="alert alert-warning">
-
-:exclamation: **Caution:**<br><br>
-
-`clear` affects all contacts currently shown in the list. If the list is filtered, only the filtered contacts are targeted.
+A person can have any number of tags (including 0)
 </div>
 
-* The command targets only the currently listed/filtered contacts.
-* A confirmation prompt is shown before contacts are removed.
+If the person being added does **not** already exist in the address book, the contact will be added immediately.
 
-**Clear confirmation prompt:**
-> `Are you sure you want to clear the currently listed contacts? [y/n]`
+If the person being added **already exists**, the application will prompt for confirmation before proceeding.
 
-* If `y` is entered, the listed/filtered contacts are deleted.
-* If `n` is entered, the operation is cancelled.
+**Duplicate-add confirmation prompt:**
+> `This person already exists: XXX`
+> `Add anyway? [y/n]`
+
+* If `y` is entered, the duplicate contact will be added.
+* If `n` is entered, the add operation will be cancelled.
 
 Examples:
-* `list` followed by `clear` then `y` clears all currently listed contacts.
-* `find tag NUSSU welfare club members` followed by `clear` then `y` clears only the filtered contacts in that result.
-* `clear` followed by `n` cancels the operation and leaves all contacts unchanged.
+* `add -n John Doe`
+* `add -r President -n John Doe -p 98765432 -e johnd@u.nus.edu -a 18 College Avenue West, #01-002`
+* `add -r Coordinator -n Lim Wei Jie -p 98765678 -e lwj.example@u.nus.edu -a 18 College Avenue West, #01-001`
 
-### Exiting the program : `exit`
+Displays all contacts in the order they are stored.
 
-Exits the CampusConnect application.
+**Format:**
+`list`
 
-**Format:** `exit`
+**Example:**
+```
+list
+```
+
+**Expected Result:**
+All contacts are displayed in their default order.
+
+#### 2. Sorted Listing
+
+You can sort contacts alphabetically in ascending or descending order.
+
+**Format:**
+`list SORT_ORDER`
+
+**Ascending (A → Z):**
+```
+list sort
+```
+or
+```
+list ascending
+```
+
+**Expected Result:**
+All contacts are displayed in ascending alphabetical order by name.
+
+**Descending (Z → A):**
+
+```
+list reverse
+```
+or
+```
+list descending
+```
+
+**Expected Result:**
+All contacts are displayed in descending alphabetical order by name.
+
+#### 3. Bonus: Copying of fields in a list
+
+You can copy the value of a field (e.g. phone number) of a contact in the list to the clipboard by clicking on the field!
+
+**Expected Result:**
+The field turns pink for a temporary period to indicate that it has been copied, and you can paste the value elsewhere.
+
+![ClickCopyPink.png](images/ClickCopyPink.png)
 
 ### Saving the data
 
@@ -411,6 +447,42 @@ _Details coming soon ..._
 **Q**: How do I transfer my data to another Computer?<br>
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous CampusConnect home folder.
 
+**Q**: Why does my contact not appear after I run a command?<br>
+**A**: The list may be filtered (e.g., after using `find` or `busyfilter`). Run `list` to display all contacts again.
+
+**Q**: Can I undo a command (e.g. `delete` or `clear`)?<br>
+**A**: No, undo is not supported in the current version of CampusConnect. You should confirm carefully before executing commands that modify or delete data.
+
+**Q**: What happens if I enter an invalid command?<br>
+**A**: The application will show an error message explaining the issue. Check the command format and try again.
+
+**Q**: Why is my `busy` command not working?<br>
+**A**: Ensure that:
+- The index refers to a valid contact in the current list
+- Dates follow the `DD/MM/YYYY` format
+- The start date is before or equal to the end date
+
+**Q**: Can a contact have multiple busy periods?<br>
+**A**: No. Each contact can only have one busy period. Running the `busy` command again will overwrite the existing period.
+
+**Q**: Why does `busyfilter` not show some contacts?<br>
+**A**: `busyfilter` only shows contacts who are busy **within the specified date range**. Contacts without a busy period, or whose busy period does not overlap with the given range, will not be shown.
+
+**Q**: Can I add duplicate contacts?<br>
+**A**: Yes, but the application will prompt you for confirmation before adding a duplicate.
+
+**Q**: Why are my tags missing after editing a contact?<br>
+**A**: When using `edit` with the `-t` field, all existing tags are replaced. To keep existing tags, you must re-enter them.
+
+**Q**: Why does `delete` remove the wrong person?<br>
+**A**: The index refers to the **currently displayed list**, not the full contact list. Run `list` first if you want to delete based on the full list.
+
+**Q**: Do I need to save my data manually?<br>
+**A**: No. All changes are saved automatically after each command.
+
+**Q**: Can I edit the data file manually?<br>
+**A**: Yes, but it is not recommended unless you are confident. Invalid edits may cause data loss.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Known issues
@@ -425,13 +497,13 @@ _Details coming soon ..._
 Action | Format, Examples
 --------|------------------
 **Add** | `add [-r ROLE] -n NAME [-p PHONE_NUMBER] [-e EMAIL] [-a ADDRESS] [-t TAG]…​` <br><br> e.g., `add -r President -n James Ho -p 22224444 -e jamesho@u.nus.edu -a 123, Clementi Rd, 1234665 -t friend -t colleague`
-**Clear** | `clear` (then confirm with `y` or cancel with `n`)
 **Busy** | `busy INDEX -s START_DATE -e END_DATE`<br><br> e.g., `busy 1 -s 25/03/2026 -e 28/03/2026`
 **BusyFilter** | `busyfilter -s START_DATE -e END_DATE`<br><br> e.g., `busyfilter -s 01/01/2026 -e 31/01/2026`
+**Clear** | `clear` (then confirm with `y` or cancel with `n`)
 **Delete** | `delete INDEX`<br><br> e.g., `delete 3`<br>(then confirm with `y` or cancel with `n`)
 **Edit** | `edit INDEX [-r ROLE] [-n NAME] [-p PHONE_NUMBER] [-e EMAIL] [-a ADDRESS] [-t TAG]…​`<br><br> e.g.,`edit 2 -n James Lee -e jameslee@u.nus.edu` <br>(then confirm with `y` or cancel with `n`)
-**Find** | `find SEARCH_BY KEYWORD [; MORE_KEYWORDS]...`<br><br> e.g., `find name alex ; david`
-**List** | `list [SORT_ORDER]`<br><br> e.g., `list reverse`
-**Help** | `help`
 **Exit** | `exit`
+**Find** | `find SEARCH_BY KEYWORD [; MORE_KEYWORDS]...`<br><br> e.g., `find name alex ; david`
+**Help** | `help`
+**List** | `list [SORT_ORDER]`<br><br> e.g., `list reverse`
 
