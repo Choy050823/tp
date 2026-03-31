@@ -21,9 +21,9 @@ public class FindCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names/tags contain any of "
             + "the specified keywords (case-insensitive) and displays them as a list.\n"
             + "Parameters: SEARCH_BY KEYWORD [; MORE_KEYWORDS]...\n"
-            + "SEARCH_BY: name | tag\n"
-            + "Examples: " + COMMAND_WORD + " name alice pauline ; josh\n"
-            + "          " + COMMAND_WORD + " tag friends ; owes me ; secretary";
+            + "SEARCH_BY: -n | -t\n"
+            + "Examples: " + COMMAND_WORD + " -n alice pauline ; josh\n"
+            + "          " + COMMAND_WORD + " -t friends ; owes me ; secretary";
 
     private final Predicate<Person> predicate;
 

@@ -16,8 +16,8 @@ import seedu.address.model.person.TagContainsKeywordsPredicate;
  * Parses input arguments and creates a new FindCommand object
  */
 public class FindCommandParser implements Parser<FindCommand> {
-    private static final String SEARCH_MODE_NAME = "name";
-    private static final String SEARCH_MODE_TAG = "tag";
+    private static final String SEARCH_MODE_NAME = "-n";
+    private static final String SEARCH_MODE_TAG = "-t";
 
 
     /**
