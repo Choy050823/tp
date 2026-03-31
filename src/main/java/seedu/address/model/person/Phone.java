@@ -12,7 +12,7 @@ public class Phone {
 
     public static final String MESSAGE_CONSTRAINTS =
             "Phone numbers should only contain numbers, and it should be at least 3 digits long";
-    public static final String VALIDATION_REGEX = "\\d(\\s*\\d){2,}";
+    public static final String VALIDATION_REGEX = "\\d{3,}";
     public final String value;
 
     /**
@@ -23,13 +23,7 @@ public class Phone {
     public Phone(String phone) {
         requireNonNull(phone);
         checkArgument(isValidPhone(phone), MESSAGE_CONSTRAINTS);
-
-        String phoneWithNoSpaces = removeSpaces(phone);
-        value = phoneWithNoSpaces;
-    }
-
-    private String removeSpaces(String phone) {
-        return phone.replaceAll("\\s+", "");
+        value = phone;
     }
 
     /**
