@@ -140,10 +140,14 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleHelp() {
-        if (!helpWindow.isShowing()) {
-            helpWindow.openUserGuide();
-        } else {
-            helpWindow.focus();
+        try {
+            if (!helpWindow.isShowing()) {
+                helpWindow.openUserGuide();
+            } else {
+                helpWindow.focus();
+            }
+        } catch (Exception e) {
+            logger.warning("Failed to open browser: " + e.getMessage());
         }
     }
 
