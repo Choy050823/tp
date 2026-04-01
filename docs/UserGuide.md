@@ -123,25 +123,8 @@ To ensure this guide is effective, we assume the target user:
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </div>
 
-### Viewing help : `help`
 
-Opens up the online user guide in the default browser.
-
-![help message](images/helpMessage.png)
-
-**Format:** `help`
-
-<div markdown="span" class="alert alert-primary">
-:bulb: **Tip:**<br><br>
-
-Alternatively, you can also access the user guide via the `Help` menu or by pressing `F1` on your keyboard.
-</div>
-
-### Listing all persons : `list`
-
-Shows a list of all persons in the address book.
-
-#### 1. Default Listin### Adding a person: `add`
+### Adding a person: `add`
 
 Adds a person to the address book.
 
@@ -171,58 +154,6 @@ Examples:
 * `add -n John Doe`
 * `add -r President -n John Doe -p 98765432 -e johnd@u.nus.edu -a 18 College Avenue West, #01-002`
 * `add -r Coordinator -n Lim Wei Jie -p 98765678 -e lwj.example@u.nus.edu -a 18 College Avenue West, #01-001`
-
-### Listing all persons : `list`
-
-Shows a list of all persons in the address book.
-
-#### 1. Default Listing
-
-Displays all contacts in the order they are stored.
-
-**Format:**
-`list`
-
-**Example:**
-```
-list
-```
-
-**Expected Result:**
-All contacts are displayed in their default order.
-
-#### 2. Sorted Listing
-
-You can sort contacts alphabetically in ascending or descending order.
-
-**Format:**
-`list SORT_ORDER`
-
-**Ascending (A → Z):**
-```
-list sort
-list ascending
-```
-
-**Expected Result:**
-All contacts are displayed in ascending alphabetical order by name.
-
-**Descending (Z → A):**
-
-```
-list descending
-list reverse
-```
-
-**Expected Result:**
-All contacts are displayed in descending alphabetical order by name.
-
-#### 3. Bonus: Copying of fields in a list
-
-You can copy the value of a field (e.g. phone number) of a contact in the list to the clipboard by clicking on the field!
-
-**Expected Result:**
-The field turns pink for a temporary period to indicate that it has been copied, and you can paste the value elsewhere.
 
 ### Marking a person as busy : `busy`
 
