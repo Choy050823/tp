@@ -133,12 +133,14 @@ Adds a person to the address book.
 
 :bulb: **Tip:**<br><br>
 
-A person can have any number of tags (including 0)
+A person can have any number of tags (including 0).
 </div>
 
 If the person being added does **not** already exist in the address book, the contact will be added immediately.
 
 If the person being added **already exists**, the application will prompt for confirmation before proceeding.
+
+Note: Two people are considered the same person if and only if they have the exact same name (case-sensitive).
 
 **Duplicate-add confirmation prompt:**
 > `This person already exists: XXX`
@@ -233,9 +235,7 @@ Deletes the specified person from the address book.
 
 <div markdown="span" class="alert alert-warning">
 
-:exclamation:
-
-**Caution:**<br><br>
+:exclamation: **Caution:**<br><br>
 
 `INDEX` refers to the currently displayed list. Run `list` first if you want to delete from the full contact list.
 </div>
