@@ -124,5 +124,9 @@ public class BusyCommand extends Command {
         return new Person(role, name, phone, email, address, tags, mergedPeriods);
     }
 
+    public String getCommandWord() {
+        return COMMAND_WORD;
+    }
+
 
 }
