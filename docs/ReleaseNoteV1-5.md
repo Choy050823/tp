@@ -7,12 +7,12 @@
 
 <!-- use this header format and name it appropriately, lets not use feature 1/2/3 -->
 ### Improvements
-- Feature `add`:
+- Feature `add`: 
 - Feature `busyfilter`: Improved invalid command message.
 - Feature `help`: Directly opens the user guide on the user's default browser.
 
 ### Bug Fixes
-- Feature `add`:
+- Feature `add`: Hide tags when there are none.
 
 ### Documentation
 - Updated the User Guide.
