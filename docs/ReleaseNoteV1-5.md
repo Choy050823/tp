@@ -7,7 +7,8 @@
 
 <!-- use this header format and name it appropriately, lets not use feature 1/2/3 -->
 ### Improvements
-- Feature `add`: 
+- Feature `busy`: Users can now add multiple busy periods to a contact. Overlapping periods are automatically merged.
+- Feature `add`:
 - Feature `busyfilter`: Improved invalid command message.
 - Feature `help`: Directly opens the user guide on the user's default browser.
 - Feature `list`: Update the error message examples displayed.
