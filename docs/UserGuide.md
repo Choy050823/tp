@@ -153,7 +153,7 @@ Note: Two people are considered the same person if and only if they have the exa
 Examples:
 * `add -n John Doe`
 * `add -r President -n John Doe -p 98765432 -e johnd@u.nus.edu -a 18 College Avenue West, #01-002`
-* `add -r Coordinator -n Lim Wei Jie -p 98765678 -e lwj.example@u.nus.edu -a 18 College Avenue West, #01-001`
+* `add -r Coordinator -n Lim Wei Jie -p 9876 5678 -e lwj.example@u.nus.edu -a 18 College Avenue West, #01-001`
 
 ### Marking a person as busy : `busy`
 
@@ -508,9 +508,3 @@ Action | Format, Examples
 **Find** | `find SEARCH_BY KEYWORD [; MORE_KEYWORDS]...`<br><br> e.g., `find name alex ; david`
 **Help** | `help`
 **List** | `list [SORT_ORDER]`<br><br> e.g., `list reverse`
-
-
-
-
-
-
