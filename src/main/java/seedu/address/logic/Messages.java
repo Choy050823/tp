@@ -22,6 +22,7 @@ public class Messages {
                 "Multiple values specified for the following single-valued field(s): ";
     public static final String MESSAGE_CONTAINS_NON_ALPHANUMERIC_CHARACTER = "Only give alphanumeric keywords";
     public static final String MESSAGE_ONLY_YES_NO = "Please enter either \'y\' or \'n\'";
+    public static final String MESSAGE_SUCCESSFUL_CANCEL = "%1$s command cancelled.";
 
     public static String getMessageForPersonsListed(int n) {
         if (n == 0) {
@@ -55,8 +56,10 @@ public class Messages {
         person.getPhone().ifPresent(phone -> builder.append("; Phone: ").append(phone));
         person.getEmail().ifPresent(email -> builder.append("; Email: ").append(email));
         person.getAddress().ifPresent(address -> builder.append("; Address: ").append(address));
-        builder.append("; Tags: ");
-        person.getTags().forEach(builder::append);
+        if (!person.getTags().isEmpty()) {
+            builder.append("; Tags: ");
+            person.getTags().forEach(builder::append);
+        }
         return builder.toString();
     }
 }
