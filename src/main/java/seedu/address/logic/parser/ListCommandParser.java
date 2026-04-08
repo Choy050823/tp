@@ -17,14 +17,17 @@ public class ListCommandParser implements Parser<ListCommand> {
      */
     @Override
     public ListCommand parse(String args) throws ParseException {
+        assert args != null : "Arguments string should not be null";
 
         String trimmedArgs = args.trim();
 
         if (trimmedArgs.isEmpty()) {
-            return new ListCommand(ListCommand.SortOrder.NONE);
+            ListCommand command = new ListCommand(ListCommand.SortOrder.NONE);
+            return command;
         }
 
         String[] tokens = trimmedArgs.split("\\s+");
+        assert tokens.length > 0 : "Tokens should not be empty after split";
 
         if (tokens.length >= 2) {
             throw new ParseException(String.format(
@@ -34,14 +37,19 @@ public class ListCommandParser implements Parser<ListCommand> {
 
         String keyword = tokens[0].toLowerCase();
 
+        ListCommand command;
         switch (keyword) {
         case "sort":
         case "ascending":
-            return new ListCommand(ListCommand.SortOrder.ASCENDING);
+            command = new ListCommand(ListCommand.SortOrder.ASCENDING);
+            assert command.getSortOrder() == ListCommand.SortOrder.ASCENDING : "Sort order should be ASCENDING";
+            return command;
 
         case "descending":
         case "reverse":
-            return new ListCommand(ListCommand.SortOrder.DESCENDING);
+            command = new ListCommand(ListCommand.SortOrder.DESCENDING);
+            assert command.getSortOrder() == ListCommand.SortOrder.DESCENDING : "Sort order should be DESCENDING";
+            return command;
 
         default:
             throw new ParseException(String.format(

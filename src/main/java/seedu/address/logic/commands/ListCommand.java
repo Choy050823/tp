@@ -39,7 +39,13 @@ public class ListCommand extends Command {
 
     private final SortOrder sortOrder;
 
+    /**
+     * Creates a ListCommand with the specified sorting order.
+     *
+     * @param sortOrder The sorting order for the list command. Must not be null.
+     */
     public ListCommand(SortOrder sortOrder) {
+        assert sortOrder != null : "Sort order must not be null";
         this.sortOrder = sortOrder;
     }
 
@@ -54,22 +60,30 @@ public class ListCommand extends Command {
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        assert model.getSortedFilteredPersonList() != null : "Filtered person list should not be null after update";
+
+        CommandResult result;
         switch (sortOrder) {
         case ASCENDING:
             model.updateSortedPersonList(SORT_BY_NAME_ASCENDING);
-            return new CommandResult(MESSAGE_SUCCESS_SORT_ASCENDING);
+            result = new CommandResult(MESSAGE_SUCCESS_SORT_ASCENDING);
+            break;
 
         case DESCENDING:
             model.updateSortedPersonList(SORT_BY_NAME_DESCENDING);
-            return new CommandResult(MESSAGE_SUCCESS_SORT_DESCENDING);
+            result = new CommandResult(MESSAGE_SUCCESS_SORT_DESCENDING);
+            break;
 
         case NONE:
         default:
             model.updateSortedPersonList(null);
-            return new CommandResult(MESSAGE_SUCCESS);
+            result = new CommandResult(MESSAGE_SUCCESS);
+            break;
         }
+
+        return result;
     }
 
     public String getCommandWord() {

@@ -24,16 +24,27 @@ public class BusyFilterCommand extends Command {
 
     private final Predicate<Person> predicate;
 
+    /**
+     * Creates a BusyFilterCommand to filter the person list using the specified predicate.
+     *
+     * @param predicate The predicate to filter the person list. Must not be null.
+     */
     public BusyFilterCommand(Predicate<Person> predicate) {
+        assert predicate != null : "Predicate must not be null";
         this.predicate = predicate;
     }
 
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
+
         model.updateFilteredPersonList(predicate);
-        return new CommandResult(
-                Messages.getMessageForPersonsListed(model.getSortedFilteredPersonList().size()));
+        assert model.getSortedFilteredPersonList() != null : "Filtered person list should not be null after update";
+
+        int resultCount = model.getSortedFilteredPersonList().size();
+
+        CommandResult result = new CommandResult(Messages.getMessageForPersonsListed(resultCount));
+        return result;
     }
 
     @Override

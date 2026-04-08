@@ -16,7 +16,9 @@ public class HelpCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) {
-        return new CommandResult(SHOWING_HELP_MESSAGE, true, false, false);
+        CommandResult result = new CommandResult(SHOWING_HELP_MESSAGE, true, false, false);
+        assert result.isShowHelp() : "CommandResult should have showHelp flag set to true";
+        return result;
     }
 
     public String getCommandWord() {
