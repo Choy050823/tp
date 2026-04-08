@@ -5,6 +5,9 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.model.Model.SORT_BY_NAME_ASCENDING;
 import static seedu.address.model.Model.SORT_BY_NAME_DESCENDING;
 
+import java.util.logging.Logger;
+
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.Model;
 
 /**
@@ -28,6 +31,8 @@ public class ListCommand extends Command {
             + "Example: " + COMMAND_WORD + " descending\n"
             + "Example: " + COMMAND_WORD + " reverse";
 
+    private static final Logger logger = LogsCenter.getLogger(ListCommand.class);
+
     /**
      * Represents the sorting order for the list command.
      */
@@ -47,6 +52,7 @@ public class ListCommand extends Command {
     public ListCommand(SortOrder sortOrder) {
         assert sortOrder != null : "Sort order must not be null";
         this.sortOrder = sortOrder;
+        logger.fine("ListCommand created with sort order: " + sortOrder);
     }
 
     /**
@@ -61,28 +67,38 @@ public class ListCommand extends Command {
     public CommandResult execute(Model model) {
         requireNonNull(model);
 
+        logger.info("Executing ListCommand with sort order: " + sortOrder);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+
         assert model.getSortedFilteredPersonList() != null : "Filtered person list should not be null after update";
+        logger.fine("Filtered person list updated successfully");
 
         CommandResult result;
         switch (sortOrder) {
         case ASCENDING:
+            logger.fine("Applying ASCENDING sort order");
             model.updateSortedPersonList(SORT_BY_NAME_ASCENDING);
             result = new CommandResult(MESSAGE_SUCCESS_SORT_ASCENDING);
+            logger.info("Persons listed with ASCENDING sort order");
             break;
 
         case DESCENDING:
+            logger.fine("Applying DESCENDING sort order");
             model.updateSortedPersonList(SORT_BY_NAME_DESCENDING);
             result = new CommandResult(MESSAGE_SUCCESS_SORT_DESCENDING);
+            logger.info("Persons listed with DESCENDING sort order");
             break;
 
         case NONE:
         default:
+            logger.fine("Applying no sort order (displaying as-is)");
             model.updateSortedPersonList(null);
             result = new CommandResult(MESSAGE_SUCCESS);
+            logger.info("Persons listed without sorting");
             break;
         }
 
+        logger.fine("ListCommand execution completed successfully");
         return result;
     }
 
