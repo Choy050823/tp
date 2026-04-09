@@ -55,6 +55,18 @@ public class ClearCommandTest {
     }
 
     @Test
+    public void execute_filteredListEmpty_success() {
+        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        model.updateFilteredPersonList(person -> false);
+
+        Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        String expectedMessage = String.format(ClearCommand.MESSAGE_SUCCESS, 0);
+
+        assertCommandSuccess(new ClearCommand(), model, expectedMessage, expectedModel);
+        assertEquals(expectedModel.getSortedFilteredPersonList(), model.getSortedFilteredPersonList());
+    }
+
+    @Test
     public void execute_nullModel_throwsNullPointerException() {
         ClearCommand command = new ClearCommand();
         assertThrows(NullPointerException.class, () -> command.execute(null));

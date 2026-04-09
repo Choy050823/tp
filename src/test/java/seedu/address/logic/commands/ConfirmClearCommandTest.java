@@ -68,6 +68,31 @@ public class ConfirmClearCommandTest {
     }
 
     @Test
+    public void getConfirmationMessage_filteredListEmpty_success() {
+        Model nonEmptyModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        nonEmptyModel.updateFilteredPersonList(person -> false);
+
+        ConfirmClearCommand confirmClearCommand = new ConfirmClearCommand();
+        String expectedMessage = String.format(ConfirmClearCommand.MESSAGE_ASK_CONFIRMATION, "");
+
+        assertEquals(expectedMessage, confirmClearCommand.getConfirmationMessage(nonEmptyModel));
+    }
+
+    @Test
+    public void getConfirmationMessage_unfilteredList_success() {
+        Model nonEmptyModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        ConfirmClearCommand confirmClearCommand = new ConfirmClearCommand();
+
+        String message = confirmClearCommand.getConfirmationMessage(nonEmptyModel);
+        String firstPerson = Messages.format(nonEmptyModel.getSortedFilteredPersonList().get(0));
+        String secondPerson = Messages.format(nonEmptyModel.getSortedFilteredPersonList().get(1));
+
+        assertTrue(message.contains(firstPerson));
+        assertTrue(message.contains(secondPerson));
+        assertTrue(message.indexOf(firstPerson) < message.indexOf(secondPerson));
+    }
+
+    @Test
     public void execute_nullModel_throwsNullPointerException() {
         ConfirmClearCommand confirmClearCommand = new ConfirmClearCommand();
         assertThrows(NullPointerException.class, () -> confirmClearCommand.execute(null));
@@ -104,4 +129,3 @@ public class ConfirmClearCommandTest {
         return String.format(ConfirmClearCommand.MESSAGE_ASK_CONFIRMATION, sb);
     }
 }
-

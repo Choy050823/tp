@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static seedu.address.logic.Messages.MESSAGE_CONTAINS_NON_ALPHANUMERIC_CHARACTER;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -23,6 +24,11 @@ public class FindCommandParserTest {
     @Test
     public void parse_emptyArg_throwsParseException() {
         assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_nullArgs_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> parser.parse(null));
     }
 
     @Test
@@ -55,6 +61,11 @@ public class FindCommandParserTest {
                         new TagContainsKeywordsPredicate(Arrays.asList("friend", "classmate"),
                                 KeywordRelation.ANY));
         assertParseSuccess(parser, " -t friend ; classmate -m or", expectedOrCommand);
+
+        FindCommand expectedCaseInsensitiveRelationCommand =
+                new FindCommand(new TagContainsKeywordsPredicate(Arrays.asList("friend", "classmate"),
+                        KeywordRelation.ANY));
+        assertParseSuccess(parser, " -t friend ; classmate -m Or", expectedCaseInsensitiveRelationCommand);
     }
 
     @Test
@@ -99,6 +110,17 @@ public class FindCommandParserTest {
     }
 
     @Test
+    public void parse_trailingSemicolon_success() throws CommandException {
+        FindCommand expectedNameCommand =
+                new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList("Alice")));
+        assertParseSuccess(parser, " -n Alice ;", expectedNameCommand);
+
+        FindCommand expectedTagCommand =
+                new FindCommand(new TagContainsKeywordsPredicate(Arrays.asList("friend")));
+        assertParseSuccess(parser, " -t friend ;", expectedTagCommand);
+    }
+
+    @Test
     public void parse_validArgsWithoutLeadingWhitespace_returnsFindCommand() throws CommandException {
         FindCommand expectedFindCommand =
                 new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
@@ -119,5 +141,7 @@ public class FindCommandParserTest {
         assertParseFailure(parser, " -n Alice -m", invalidFormatMessage);
         assertParseFailure(parser, " -n Alice -m and or", invalidFormatMessage);
         assertParseFailure(parser, " -n -m and", invalidFormatMessage);
+        assertParseFailure(parser, " -t friend -m or -m and", invalidFormatMessage);
+        assertParseFailure(parser, " -n Alice -t -m or", invalidFormatMessage);
     }
 }
