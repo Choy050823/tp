@@ -17,6 +17,10 @@ import seedu.address.model.person.Person;
  * Keyword matching is case insensitive.
  */
 public class FindCommand extends Command {
+    /**
+     * Min Han: AI was used to suggest assertion and logging points in this class,
+     * and the final placements were manually selected and reviewed.
+     */
     public static final String COMMAND_WORD = "find";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names/tags contain "

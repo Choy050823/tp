@@ -14,6 +14,10 @@ import seedu.address.model.person.Person;
  * Asks user for confirmation before clearing all currently listed contacts.
  */
 public class ConfirmClearCommand extends ClearCommand implements ConfirmCommand {
+    /**
+     * Min Han: AI was used to suggest assertion and logging points in this class,
+     * and the final placements were manually selected and reviewed.
+     */
     public static final String MESSAGE_ASK_CONFIRMATION =
             "Are you sure you want to clear the currently listed contacts? [y/n]%1$s";
 

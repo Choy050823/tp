@@ -15,6 +15,10 @@ import seedu.address.model.person.Person;
  * Clears the contacts currently shown in the list.
  */
 public class ClearCommand extends Command {
+    /**
+     * Min Han: AI was used to suggest assertion and logging points in this class,
+     * and the final placements were manually selected and reviewed.
+     */
     public static final String COMMAND_WORD = "clear";
     public static final String MESSAGE_SUCCESS = "%d contact(s) have been cleared.";
 

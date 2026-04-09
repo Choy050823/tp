@@ -27,6 +27,10 @@ import seedu.address.model.person.TagContainsKeywordsPredicate;
  * Parses input arguments and creates a new FindCommand object
  */
 public class FindCommandParser implements Parser<FindCommand> {
+    /**
+     * Min Han: AI was used to suggest assertion and logging points in this parser,
+     * and the final placements were manually selected and reviewed.
+     */
     private static final Logger logger = LogsCenter.getLogger(FindCommandParser.class);
     private static final Pattern RELATION_MARKER_PATTERN = Pattern.compile("(?<=^|\\s)-m\\b");
 
