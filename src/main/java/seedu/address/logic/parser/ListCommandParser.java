@@ -13,6 +13,14 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class ListCommandParser implements Parser<ListCommand> {
 
+    /**
+     * Yi Heng: I used AI to help me ideate what are the points of assertions in the main code
+     * and only kept the instances recommended by AI that I think are the most important, following
+     * the course's instructions to use assertions to check for programmer errors and not user input errors.
+     *
+     * Likewise for logging.
+     */
+
     private static final Logger logger = LogsCenter.getLogger(ListCommandParser.class);
 
     /**

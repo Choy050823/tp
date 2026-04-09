@@ -1,3 +1,9 @@
+/**
+ * Yi Heng: I used AI to help me ideate what are the points of assertions in the main code
+ * and only kept the instances recommended by AI that I think are the most important, following
+ * the course's instructions to use assertions to check for programmer errors and not user input errors.
+ */
+
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;

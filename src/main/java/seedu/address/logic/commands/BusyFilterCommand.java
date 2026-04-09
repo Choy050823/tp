@@ -14,6 +14,12 @@ import seedu.address.model.person.Person;
  */
 public class BusyFilterCommand extends Command {
 
+    /**
+     * Yi Heng: I used AI to help me ideate what are the points of assertions in the main code
+     * and only kept the instances recommended by AI that I think are the most important, following
+     * the course's instructions to use assertions to check for programmer errors and not user input errors.
+     */
+
     public static final String COMMAND_WORD = "busyfilter";
 
     public static final String MESSAGE_USAGE =

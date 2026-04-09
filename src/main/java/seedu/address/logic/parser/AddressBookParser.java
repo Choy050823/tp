@@ -1,3 +1,8 @@
+/**
+ * Yi Heng: I used AI to help me complete the rest of the logging instances after I wrote the first user input
+ * log and warning, and the first case under switch.
+ */
+
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;

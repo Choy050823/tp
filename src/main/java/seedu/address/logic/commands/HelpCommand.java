@@ -10,6 +10,14 @@ import seedu.address.model.Model;
  */
 public class HelpCommand extends Command {
 
+    /**
+     * Yi Heng: I used AI to help me ideate what are the points of assertions in the main code
+     * and only kept the instances recommended by AI that I think are the most important, following
+     * the course's instructions to use assertions to check for programmer errors and not user input errors.
+     *
+     * Likewise for logging.
+     */
+
     public static final String COMMAND_WORD = "help";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows program usage instructions.\n"
