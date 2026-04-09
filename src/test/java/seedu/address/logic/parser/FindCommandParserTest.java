@@ -2,7 +2,6 @@ package seedu.address.logic.parser;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static seedu.address.logic.Messages.MESSAGE_CONTAINS_NON_ALPHANUMERIC_CHARACTER;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -12,6 +11,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
 
@@ -76,7 +76,8 @@ public class FindCommandParserTest {
     @Test
     public void parse_validNameAndTagArgs_returnsFindCommand() throws CommandException {
         FindCommand expectedFindCommand = new FindCommand(
-                new NameTagContainsKeywordsPredicate(Arrays.asList("meier"), Arrays.asList("friends")));
+                new NameTagContainsKeywordsPredicate(Collections.singletonList("meier"),
+                        Collections.singletonList("friends")));
         assertParseSuccess(parser, " -n meier -t friends", expectedFindCommand);
 
         FindCommand expectedMixedCommand = new FindCommand(
@@ -117,11 +118,11 @@ public class FindCommandParserTest {
     @Test
     public void parse_trailingSemicolon_success() throws CommandException {
         FindCommand expectedNameCommand =
-                new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList("Alice")));
+                new FindCommand(new NameContainsKeywordsPredicate(Collections.singletonList("Alice")));
         assertParseSuccess(parser, " -n Alice ;", expectedNameCommand);
 
         FindCommand expectedTagCommand =
-                new FindCommand(new TagContainsKeywordsPredicate(Arrays.asList("friend")));
+                new FindCommand(new TagContainsKeywordsPredicate(Collections.singletonList("friend")));
         assertParseSuccess(parser, " -t friend ;", expectedTagCommand);
     }
 
@@ -152,7 +153,8 @@ public class FindCommandParserTest {
 
     @Test
     public void parseSegment_nullPrefix_throwsAssertionError() throws Exception {
-        assumeTrue(FindCommandParser.class.desiredAssertionStatus());
+        assertTrue(FindCommandParser.class.desiredAssertionStatus(),
+                "Assertions must be enabled for assert-focused tests");
 
         Method parseSegment = FindCommandParser.class.getDeclaredMethod("parseSegment", Prefix.class, String.class);
         parseSegment.setAccessible(true);
@@ -164,7 +166,8 @@ public class FindCommandParserTest {
 
     @Test
     public void parsedSegment_nullPrefix_throwsAssertionError() throws Exception {
-        assumeTrue(FindCommandParser.class.desiredAssertionStatus());
+        assertTrue(FindCommandParser.class.desiredAssertionStatus(),
+                "Assertions must be enabled for assert-focused tests");
 
         Class<?> parsedSegmentClass = Class.forName("seedu.address.logic.parser.FindCommandParser$ParsedSegment");
         Constructor<?> constructor = parsedSegmentClass.getDeclaredConstructor(
@@ -179,7 +182,8 @@ public class FindCommandParserTest {
 
     @Test
     public void parsedSegment_nullKeywords_throwsAssertionError() throws Exception {
-        assumeTrue(FindCommandParser.class.desiredAssertionStatus());
+        assertTrue(FindCommandParser.class.desiredAssertionStatus(),
+                "Assertions must be enabled for assert-focused tests");
 
         Class<?> parsedSegmentClass = Class.forName("seedu.address.logic.parser.FindCommandParser$ParsedSegment");
         Constructor<?> constructor = parsedSegmentClass.getDeclaredConstructor(
@@ -194,7 +198,8 @@ public class FindCommandParserTest {
 
     @Test
     public void parsedSegment_nullRelation_throwsAssertionError() throws Exception {
-        assumeTrue(FindCommandParser.class.desiredAssertionStatus());
+        assertTrue(FindCommandParser.class.desiredAssertionStatus(),
+                "Assertions must be enabled for assert-focused tests");
 
         Class<?> parsedSegmentClass = Class.forName("seedu.address.logic.parser.FindCommandParser$ParsedSegment");
         Constructor<?> constructor = parsedSegmentClass.getDeclaredConstructor(
@@ -209,7 +214,8 @@ public class FindCommandParserTest {
 
     @Test
     public void parsedFindSegments_nullRelation_throwsAssertionError() throws Exception {
-        assumeTrue(FindCommandParser.class.desiredAssertionStatus());
+        assertTrue(FindCommandParser.class.desiredAssertionStatus(),
+                "Assertions must be enabled for assert-focused tests");
 
         Class<?> parsedFindSegmentsClass = Class.forName(
                 "seedu.address.logic.parser.FindCommandParser$ParsedFindSegments");
@@ -226,7 +232,8 @@ public class FindCommandParserTest {
 
     @Test
     public void parsedFindSegments_nullTagRelation_throwsAssertionError() throws Exception {
-        assumeTrue(FindCommandParser.class.desiredAssertionStatus());
+        assertTrue(FindCommandParser.class.desiredAssertionStatus(),
+                "Assertions must be enabled for assert-focused tests");
 
         Class<?> parsedFindSegmentsClass = Class.forName(
                 "seedu.address.logic.parser.FindCommandParser$ParsedFindSegments");
