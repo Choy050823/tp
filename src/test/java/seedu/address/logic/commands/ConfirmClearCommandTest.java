@@ -1,6 +1,8 @@
 package seedu.address.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
@@ -63,6 +65,24 @@ public class ConfirmClearCommandTest {
                 String.format(ConfirmClearCommand.MESSAGE_ASK_CONFIRMATION, ""), false, false, true);
 
         assertCommandSuccess(confirmClearCommand, model, expectedCommandResult, new ModelManager());
+    }
+
+    @Test
+    public void execute_nullModel_throwsNullPointerException() {
+        ConfirmClearCommand confirmClearCommand = new ConfirmClearCommand();
+        assertThrows(NullPointerException.class, () -> confirmClearCommand.execute(null));
+    }
+
+    @Test
+    public void getConfirmationMessage_nullModel_throwsNullPointerException() {
+        ConfirmClearCommand confirmClearCommand = new ConfirmClearCommand();
+        assertThrows(NullPointerException.class, () -> confirmClearCommand.getConfirmationMessage(null));
+    }
+
+    @Test
+    public void getCommandWord_inheritedFromClearCommand() {
+        ConfirmClearCommand confirmClearCommand = new ConfirmClearCommand();
+        assertEquals(ClearCommand.COMMAND_WORD, confirmClearCommand.getCommandWord());
     }
 
     @Test

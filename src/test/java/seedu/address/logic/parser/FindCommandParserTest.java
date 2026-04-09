@@ -18,7 +18,7 @@ import seedu.address.model.person.TagContainsKeywordsPredicate;
 
 public class FindCommandParserTest {
 
-    private FindCommandParser parser = new FindCommandParser();
+    private final FindCommandParser parser = new FindCommandParser();
 
     @Test
     public void parse_emptyArg_throwsParseException() {
@@ -67,6 +67,11 @@ public class FindCommandParserTest {
                 new NameTagContainsKeywordsPredicate(Arrays.asList("dan", "elle"), Arrays.asList("friends", "student"),
                         KeywordRelation.ALL, KeywordRelation.ANY));
         assertParseSuccess(parser, " -n dan ; elle -m and -t friends ; student -m or", expectedMixedCommand);
+
+        FindCommand expectedReversedOrderCommand = new FindCommand(
+                new NameTagContainsKeywordsPredicate(Arrays.asList("dan", "elle"), Arrays.asList("friends", "student"),
+                        KeywordRelation.ALL, KeywordRelation.ANY));
+        assertParseSuccess(parser, " -t friends ; student -m or -n dan ; elle -m and", expectedReversedOrderCommand);
     }
 
     @Test
@@ -98,6 +103,10 @@ public class FindCommandParserTest {
         FindCommand expectedFindCommand =
                 new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
         assertParseSuccess(parser, "-n Alice ; Bob", expectedFindCommand);
+
+        FindCommand expectedTagCommand =
+                new FindCommand(new TagContainsKeywordsPredicate(Arrays.asList("friend", "classmate")));
+        assertParseSuccess(parser, "-t friend ; classmate", expectedTagCommand);
     }
 
     @Test
