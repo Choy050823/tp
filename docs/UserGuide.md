@@ -345,7 +345,7 @@ Use `;` to split phrases into multiple keyword groups, e.g. `find -n alice pauli
 
 Examples:
 * `find -n alice pauline ; josh -m or` returns persons whose names contain `alice pauline` or `josh`.
-* `find -t RAG2026 ; finance department ; secretaries -m and` returns persons with tags containing all listed groups.
+* `find -t RAG2026 ; finance ; secretaries -m and` returns persons with tags containing all listed groups.
 * `find -n dan ; elle -m and -t friends ; student -m or` returns persons whose names contain both `dan` and `elle`,
   and tags containing `friends` or `student`.
 * `find -n heng ; kang -m and` returns persons whose names contain both `heng` and `kang`.<br>
