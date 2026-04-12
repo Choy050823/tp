@@ -90,7 +90,7 @@ To ensure this guide is effective, we assume the target user:
 
 <div markdown="block" class="alert alert-info">
 **ℹ️ Command confirmation:**<br>
-  Certain commands like `delete` and `clear` will ask for confirmation. Input `y` to confirm or `n` to cancel.
+  Certain commands like `delete`, `edit`, `exit` and `clear` will ask for confirmation. Input `y` to confirm or `n` to cancel.
 </div>
 
   * `delete 3` : Deletes the 3rd contact shown in the current list.
