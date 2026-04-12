@@ -46,7 +46,7 @@ features described here. I reviewed and adapted the final documentation.
 
 ## **Acknowledgements**
 
-* {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
+* This project is an extension of the AddressBook Level3 (AB3) codebase, which was originally developed by [SE-EDU](https://se-education.org/).
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -831,35 +831,35 @@ testers are expected to do more *exploratory* testing.
 
     1. Prerequisites: The app contains multiple contacts with different names.
 
-    2. Test case: `find John`<br>
+    2. Test case: `find -n John`<br>
        Expected: All contacts with names containing "John" are displayed.
 
-    3. Test case: `find alice`<br>
+    3. Test case: `find -n alice`<br>
        Expected: Contacts matching "alice" are displayed (case-insensitive).
 
-    4. Test case: `find John; alice`<br>
+    4. Test case: `find -n John; alice`<br>
        Expected: Contacts matching "John" and "alice" are displayed (case-insensitive).
 
 2. Finding persons by partial match
 
     1. Prerequisites: The app contains contacts such as "Jonathan", "Johnny", "John Doe".
 
-    2. Test case: `find John`<br>
-       Expected: All contacts with names containing "John" (e.g., "Jonathan", "Johnny", "John Doe") are displayed.
+    2. Test case: `find -n Jo`<br>
+       Expected: All contacts with names containing "Jo" (e.g., "Jonathan", "Johnny", "John Doe") are displayed.
 
 3. Finding persons with no matches
 
     1. Prerequisites: The app contains multiple contacts.
 
-    2. Test case: `find xyz`<br>
+    2. Test case: `find -n xyz`<br>
        Expected: No contacts are displayed. A message indicating no matches found is shown.
 
 4. Invalid find commands
 
-    1. Test case: `find`<br>
+    1. Test case: `find -n`<br>
        Expected: Error message shown indicating invalid command format.
 
-    2. Test case: `find @@@`<br>
+    2. Test case: `find -n @@@`<br>
        Expected: Error message shown indicating invalid command format.
 
 ### Listing persons
@@ -962,9 +962,3 @@ testers are expected to do more *exploratory* testing.
 
     3. Test case: `busyfilter -s invalid -e invalid`<br>
        Expected: Error message shown indicating that dates must follow the DD/MM/YYYY format.
-
-### Saving data
-
-1. Dealing with missing/corrupted data files
-
-    1. TODO _{explain how to simulate a missing/corrupted file, and the expected behavior}_

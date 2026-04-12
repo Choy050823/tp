@@ -71,7 +71,7 @@ To ensure this guide is effective, we assume the target user:
 
 3. Copy the file to the folder you want to use as the _home folder_ for your CampusConnect.
 
-4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar campusconnect.jar` command to run the application.<br>
+4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar [CS2103T-W13-3][CampusConnect].jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/ProductUI_V1-3_home.png)
 
@@ -90,7 +90,7 @@ To ensure this guide is effective, we assume the target user:
 
 <div markdown="block" class="alert alert-info">
 **ℹ️ Command confirmation:**<br>
-  Certain commands like `delete` and `clear` will ask for confirmation. Input `y` to confirm or `n` to cancel.
+  Certain commands like `delete`, `edit`, `exit` and `clear` will ask for confirmation. Input `y` to confirm or `n` to cancel.
 </div>
 
   * `delete 3` : Deletes the 3rd contact shown in the current list.
@@ -123,7 +123,7 @@ To ensure this guide is effective, we assume the target user:
 * Parameters can be in any order.<br>
   e.g. if the command specifies `-n NAME -p PHONE_NUMBER`, `-p PHONE_NUMBER -n NAME` is also acceptable.
 
-* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
+* Extraneous parameters for commands that do not take in parameters (such as `help`, `exit` and `clear`, or `y`/`n` for confirmation command) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
@@ -140,7 +140,7 @@ Adds a person to the address book.
 
 :bulb: **Tip:**<br><br>
 
-A person can have any number of tags (including 0).
+A person can have any number of tags (including 0). But each tag cannot have a space.
 </div>
 
 If the person being added does **not** already exist in the address book, the contact will be added immediately.
@@ -192,7 +192,7 @@ Shows all contacts who are busy at **any point within the given date range**.
 `busyfilter -s START_DATE -e END_DATE`
 
 * `START_DATE` and `END_DATE` must be in `DD/MM/YYYY` format.
-* Contacts with busy period are considered available and will not be displayed.
+* Contacts without busy period are considered available and will not be displayed.
 
 **Example:**
 ```
@@ -321,6 +321,9 @@ Before the exit is performed, the application will prompt for confirmation.
 * If `y` is entered, the application will exit.
 * If `n` is entered, the exit operation will be cancelled.
 
+**Alternative:**
+* You can also exit the application by clicking `File` > `Exit` in the menu bar without any confirmation prompt.
+
 ### Locating persons by name/tags: `find`
 
 Finds persons whose names/tags contain the given keyword groups.
@@ -345,7 +348,7 @@ Use `;` to split phrases into multiple keyword groups, e.g. `find -n alice pauli
 
 Examples:
 * `find -n alice pauline ; josh -m or` returns persons whose names contain `alice pauline` or `josh`.
-* `find -t RAG2026 ; finance department ; secretaries -m and` returns persons with tags containing all listed groups.
+* `find -t RAG2026 ; finance ; secretaries -m and` returns persons with tags containing all listed groups.
 * `find -n dan ; elle -m and -t friends ; student -m or` returns persons whose names contain both `dan` and `elle`,
   and tags containing `friends` or `student`.
 * `find -n heng ; kang -m and` returns persons whose names contain both `heng` and `kang`.<br>
@@ -471,7 +474,7 @@ _Details coming soon ..._
 - The start date is before or equal to the end date
 
 **Q**: Can a contact have multiple busy periods?<br>
-**A**: No. Each contact can only have one busy period. Running the `busy` command again will overwrite the existing period.
+**A**: Yes. Each contact can have multiple busy periods.
 
 **Q**: Why does `busyfilter` not show some contacts?<br>
 **A**: `busyfilter` only shows contacts who are busy **within the specified date range**. Contacts without a busy period, or whose busy period does not overlap with the given range, will not be shown.
@@ -496,21 +499,21 @@ _Details coming soon ..._
 ## Known issues
 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
-2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
 
 --------------------------------------------------------------------------------------------------------------------
 
 ## Command summary
 
-Action | Format, Examples
---------|------------------
-**Add** | `add [-r ROLE] -n NAME [-p PHONE_NUMBER] [-e EMAIL] [-a ADDRESS] [-t TAG]…​` <br><br> e.g., `add -r President -n James Ho -p 22224444 -e jamesho@u.nus.edu -a 123, Clementi Rd, 1234665 -t friend -t colleague`
-**Busy** | `busy INDEX -s START_DATE -e END_DATE`<br><br> e.g., `busy 1 -s 25/03/2026 -e 28/03/2026`
-**BusyFilter** | `busyfilter -s START_DATE -e END_DATE`<br><br> e.g., `busyfilter -s 01/01/2026 -e 31/01/2026`
-**Clear** | `clear` (then confirm with `y` or cancel with `n`)
-**Delete** | `delete INDEX`<br><br> e.g., `delete 3`<br>(then confirm with `y` or cancel with `n`)
-**Edit** | `edit INDEX [-r ROLE] [-n NAME] [-p PHONE_NUMBER] [-e EMAIL] [-a ADDRESS] [-t TAG]…​`<br><br> e.g.,`edit 2 -n James Lee -e jameslee@u.nus.edu` <br>(then confirm with `y` or cancel with `n`)
-**Exit** | `exit`<br>(then confirm with `y` or cancel with `n`)
-**Find** | `find SEARCH_BY KEYWORD [; MORE_KEYWORDS]...`<br><br> e.g., `find name alex ; david`
-**Help** | `help`
-**List** | `list [SORT_ORDER]`<br><br> e.g., `list reverse`
+Action | Format, Examples                                                                                                                                                                                                                                              
+--------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Add** | `add [-r ROLE] -n NAME [-p PHONE_NUMBER] [-e EMAIL] [-a ADDRESS] [-t TAG]…​` <br><br> e.g., `add -r President -n James Ho -p 22224444 -e jamesho@u.nus.edu -a 123, Clementi Rd, 1234665 -t friend -t colleague`                                               
+**Busy** | `busy INDEX -s START_DATE -e END_DATE`<br><br> e.g., `busy 1 -s 25/03/2026 -e 28/03/2026`                                                                                                                                                                     
+**BusyFilter** | `busyfilter -s START_DATE -e END_DATE`<br><br> e.g., `busyfilter -s 01/01/2026 -e 31/01/2026`                                                                                                                                                                 
+**Clear** | `clear` (then confirm with `y` or cancel with `n`)                                                                                                                                                                                                            
+**Delete** | `delete INDEX`<br><br> e.g., `delete 3`<br>(then confirm with `y` or cancel with `n`)                                                                                                                                                                         
+**Edit** | `edit INDEX [-r ROLE] [-n NAME] [-p PHONE_NUMBER] [-e EMAIL] [-a ADDRESS] [-t TAG]…​`<br><br> e.g.,`edit 2 -n James Lee -e jameslee@u.nus.edu` <br>(then confirm with `y` or cancel with `n`)                                                                 
+**Exit** | `exit`<br>(then confirm with `y` or cancel with `n`)                                                                                                                                                                                                          
+**Find** | `find -n NAME_KEYWORDS [; MORE_NAME_KEYWORDS]... [-m and\|or] [-t TAG_KEYWORDS [; MORE_TAG_KEYWORDS]... [-m and                                                                                                 \|or]]` <br><br> e.g., `find -n alex ; david` 
+**Help** | `help`                                                                                                                                                                                                                                                        
+**List** | `list [SORT_ORDER]`<br><br> e.g., `list reverse`                                                                                                                                                                                                              
+
