@@ -458,73 +458,59 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-**UC01: Tag a Leader for an Event**
+**UC01: Edit a Contact**
 
-**Goal:** To associate an existing contact with a specific committee or event tag.
+**Goal:** To edit an existing person in the address book.
 
 **MSS:**
-1. Marcus searches for a leader by name.
-2. CampusConnect displays a list of matching contacts.
-3. Marcus selects the desired contact from the list.
-4. CampusConnect displays the contact’s detailed profile.
-5. Marcus selects the option to **Add Tag**.
-6. CampusConnect prompts for the tag name.
-7. Marcus enters the event/committee name (e.g., "Sustainability Forum").
-8. CampusConnect saves the tag and updates the profile view.
+1. Marcus requests to update specific details of a chosen contact.
+2. CampusConnect requests confirmation and displays a summary of the intended changes.
+3. Marcus confirms the update.
+4. CampusConnect saves the modified contact details and displays the updated profile.
    Use case ends.
 
 **Extensions:**
-* 2a. The search returns no matches.
-    * 2a1. Marcus chooses to create a new contact.
-    * 2a2. Use case resumes from step 5 of **UC02 (Add New Contact)**.
-* 7a. The tag already exists in the system.
-    * 7a1. CampusConnect provides a dropdown of existing matches.
-    * 7a2. Marcus selects the correct tag from the list.
-    * Use case resumes from step 8.
-
----
-
-**UC02: Create Contact via Duplication**
-
-**Goal:** To quickly add a new committee member by copying details (like committee/schedules) from an existing member.
-
-**MSS:**
-1. Marcus searches for an existing leader with similar details (e.g., "Adam").
-2. CampusConnect displays the existing profile.
-3. Marcus selects the **Duplicate Contact** option.
-4. CampusConnect opens a new "Add Contact" form pre-filled with the original's committee and "busy" indicators.
-5. Marcus edits the name and contact information to match the new person (e.g., "Charlene").
-6. Marcus saves the new contact.
-7. CampusConnect confirms the creation and displays the new profile.
-   Use case ends.
-
-**Extensions:**
-* 5a. Marcus is missing some required information (e.g., the phone number).
-    * 5a1. Marcus saves the contact with only the name and tag.
-    * 5a2. CampusConnect saves the profile but marks it with a "Missing Info" flag for future follow-up.
+* 2a. The requested update results in no actual changes to the contact's details.
+    * 2a1. CampusConnect informs Marcus that no modifications were made and halts the operation.
+    * Use case ends.
+* 2b. The updated details result in a duplicate of another existing contact.
+    * 2b1. CampusConnect warns Marcus of the potential duplication before requesting confirmation.
+    * Use case resumes at step 3.
+* 3a. Marcus decides to cancel the update.
+    * 3a1. CampusConnect aborts the operation and retains the original details.
     * Use case ends.
 
 ---
 
-**UC03: Bulk Archive Outdated Contacts**
+**UC02: Clear Listed Contacts**
 
-**Goal:** To remove high-volume committee data (e.g., from a past year's Rag & Flag) from the active view while keeping it for records.
+**Goal:** To clear the contacts currently shown in the list.
 
 **MSS:**
-1. Marcus filters the contact list by a specific tag (e.g., "Rag 2025").
-2. CampusConnect displays all leaders associated with that tag.
-3. Marcus selects the **Select All** checkbox.
-4. Marcus selects the **Archive** action.
-5. CampusConnect requests confirmation to archive the selected batch of contacts.
-6. Marcus confirms the action.
-7. CampusConnect moves the contacts to the archive and clears the current view.
+1. Marcus filters or adjusts the contact view to display only the entries he wishes to target.
+2. Marcus requests to clear the currently displayed contacts.
+3. CampusConnect requests confirmation before proceeding with the deletion.
+4. Marcus confirms the action.
+5. CampusConnect removes the targeted contacts from the system.
    Use case ends.
 
 **Extensions:**
-* 6a. Marcus realizes some selected members are still active.
-    * 6a1. Marcus deselects the specific active members from the list.
-    * 6a2. Marcus proceeds to confirm the archival for the remaining selection.
-    * Use case resumes from step 7.
+* 4a. Marcus chooses to cancel the action.
+    * 4a1. CampusConnect aborts the operation, leaving all contacts unchanged.
+    * Use case ends.
+
+---
+
+**UC03: Copy Field to Clipboard**
+
+**Goal:** To copy the value of a field of a contact in the list to the clipboard.
+
+**MSS:**
+1. Marcus views a contact's profile in the application.
+2. Marcus requests to copy a specific data field from that contact.
+3. CampusConnect provides visual feedback indicating the action was successfully registered.
+4. CampusConnect transfers the requested data to the system clipboard.
+   Use case ends.
 
 ---
 
@@ -557,7 +543,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS:**
 1. Marcus finds the contact he wishes to remove (see **UC06: Search Contact**).
-2. Marcus selects the **Delete** option for that contact.
+2. Marcus requests to delete that contact.
 3. CampusConnect requests confirmation for the deletion.
 4. Marcus confirms the deletion.
 5. CampusConnect removes the contact from the database and confirms the action.
@@ -622,6 +608,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 3a1. CampusConnect displays an error message explaining the command format.
     * 3a2. Marcus re-enters a valid sort field.
     * Use case resumes at step 1.
+    
 ---
 **UC09: Mark a Contact as Busy**
 
