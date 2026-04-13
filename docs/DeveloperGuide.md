@@ -463,21 +463,21 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Goal:** To edit an existing person in the address book.
 
 **MSS:**
-1. Marcus enters the `edit` command with the person's index and the specific fields to update.
-2. CampusConnect prompts for confirmation and shows the exact fields that will be changed.
-3. Marcus enters `y` to confirm.
-4. CampusConnect updates the existing values to the input values.
+1. Marcus requests to update specific details of a chosen contact.
+2. CampusConnect requests confirmation and displays a summary of the intended changes.
+3. Marcus confirms the update.
+4. CampusConnect saves the modified contact details and displays the updated profile.
    Use case ends.
 
 **Extensions:**
-* 2a. The edit does not make any effective change.
-    * 2a1. CampusConnect rejects the command and shows a message that no changes were made.
+* 2a. The requested update results in no actual changes to the contact's details.
+    * 2a1. CampusConnect informs Marcus that no modifications were made and halts the operation.
     * Use case ends.
-* 2b. The edited person duplicates an existing person.
-    * 2b1. CampusConnect shows a warning before prompting for confirmation.
+* 2b. The updated details result in a duplicate of another existing contact.
+    * 2b1. CampusConnect warns Marcus of the potential duplication before requesting confirmation.
     * Use case resumes at step 3.
-* 3a. Marcus enters `n`.
-    * 3a1. CampusConnect cancels the edit operation.
+* 3a. Marcus decides to cancel the update.
+    * 3a1. CampusConnect aborts the operation and retains the original details.
     * Use case ends.
 
 ---
@@ -487,16 +487,16 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Goal:** To clear the contacts currently shown in the list.
 
 **MSS:**
-1. Marcus lists or filters the contacts so the view displays only the entries he wishes to target.
-2. Marcus enters the `clear` command.
-3. CampusConnect shows a confirmation prompt before the contacts are removed.
-4. Marcus enters `y` to confirm.
-5. CampusConnect deletes the listed/filtered contacts.
+1. Marcus filters or adjusts the contact view to display only the entries he wishes to target.
+2. Marcus requests to clear the currently displayed contacts.
+3. CampusConnect requests confirmation before proceeding with the deletion.
+4. Marcus confirms the action.
+5. CampusConnect removes the targeted contacts from the system.
    Use case ends.
 
 **Extensions:**
-* 4a. Marcus enters `n` to cancel.
-    * 4a1. CampusConnect cancels the operation and leaves all contacts unchanged.
+* 4a. Marcus chooses to cancel the action.
+    * 4a1. CampusConnect aborts the operation, leaving all contacts unchanged.
     * Use case ends.
 
 ---
@@ -506,10 +506,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Goal:** To copy the value of a field of a contact in the list to the clipboard.
 
 **MSS:**
-1. Marcus views the list of contacts in the GUI.
-2. Marcus clicks on a specific field of a contact in the list.
-3. CampusConnect turns the field pink for a temporary period to indicate it has been copied.
-4. The value is copied to the clipboard so Marcus can paste it elsewhere.
+1. Marcus views a contact's profile in the application.
+2. Marcus requests to copy a specific data field from that contact.
+3. CampusConnect provides visual feedback indicating the action was successfully registered.
+4. CampusConnect transfers the requested data to the system clipboard.
    Use case ends.
 
 ---
@@ -543,7 +543,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS:**
 1. Marcus finds the contact he wishes to remove (see **UC06: Search Contact**).
-2. Marcus selects the **Delete** option for that contact.
+2. Marcus requests to delete that contact.
 3. CampusConnect requests confirmation for the deletion.
 4. Marcus confirms the deletion.
 5. CampusConnect removes the contact from the database and confirms the action.
